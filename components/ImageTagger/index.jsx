@@ -10,9 +10,25 @@ export default function Home(props) {
 
   //on mounted
   useEffect(() => {
+    const MAX_NUM_PICS = 20;
+    fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
+      async (response) => {
+        const pics = await response.json();
+        const mappedPics = pics.map((pic) => {
+          const { download_url: url, id, author } = pic;
+          return { url, id, author };
+        });
+        console.log(mappedPics[0]);
+
+        setImages(mappedPics);
+      }
+    );
     setTags(["hey", "hi"]);
-    setImages(["aefajifia", "nhuajsfasf"]);
   }, []);
+
+  useEffect(() => {
+    console.log("images: ", images);
+  }, [images]);
 
   return (
     <div>
@@ -31,7 +47,14 @@ export default function Home(props) {
         </aside>
         <main className="main-area">
           <section className="images-grid raised--high card shadow--curved glass">
-            images-grid
+            {images?.map(({ url, id, author }) => {
+              console.log("url: ", url);
+              return (
+                <div key={id} className="img-container card">
+                  <img className="image" src={url} />
+                </div>
+              );
+            })}
           </section>
           <section className="tags-with-associated-images card glass">
             tags-with-associated-images
@@ -68,6 +91,8 @@ export default function Home(props) {
         .images-grid {
           grid-area: images-grid;
           height: 65%;
+          max-height: 53vh;
+          overflow: auto;
         }
 
         .tags-with-associated-images {
@@ -84,8 +109,6 @@ export default function Home(props) {
           padding: 20px;
           grid-template-areas:
             "header header header header header header"
-            "header2 header2 header2 header2 header2 header2"
-            "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"
@@ -96,6 +119,16 @@ export default function Home(props) {
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area";
+        }
+
+        .img-container {
+          width: auto;
+          display: inline;
+        }
+
+        .image {
+          max-width: 30%;
+          height: auto;
         }
       `}</style>
     </div>

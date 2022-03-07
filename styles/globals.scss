@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@900&display=swap");
+
 @font-face {
   font-family: "Source Sans Pro";
-  src: url("/public/fonts/SourceSansPro-Light.ttf");
+  src: url("/fonts/SourceSansPro/SourceSansPro-Light.ttf");
 }
 
 html,
@@ -48,9 +51,6 @@ a {
 
 .title {
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Exo:wght@900&display=swap");
 
 body,
 html {
