@@ -17,11 +17,13 @@ export default function Home(props) {
   return (
     <div>
       <div className="image-tagger-page">
-        <h1 className="header title">
-          <span>IMAGE TAGGER</span>
-          <span>IMAGE TAGGER</span>
-        </h1>
-        <h2 className="title-2">By Jonathan Weiss</h2>
+        <div className="header">
+          <h1 className="title">
+            <span>IMAGE TAGGER</span>
+            <span>IMAGE TAGGER</span>
+          </h1>
+          <h2 className="title-2">By Jonathan Weiss</h2>
+        </div>
 
         <aside className="sidebar">
           <div className="create-tag card glass">create tag</div>
