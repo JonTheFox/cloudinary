@@ -12,9 +12,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <ImageTagger></ImageTagger>
-      </div>
+      <main>
+        <ImageTagger />
+      </main>
 
       <footer className={styles.footer}>
         <span>Created by Jonathan Weiss</span>
