@@ -15,19 +15,79 @@ export default function Home(props) {
   }, []);
 
   return (
-    <main>
-      <h1>Image Tagger</h1>
+    <div>
       <div className="image-tagger-page">
-        {tags}
-        {images}
+        <h1 className="header">Image Tagger</h1>
+        <aside className="sidebar">
+          <div className="create-tag card">create tag</div>
+          <div className="available-tags card">available-tags</div>
+        </aside>
+        <main className="main-area">
+          <section className="images-grid card glass">images-grid</section>
+          <section className="tags-with-associated-images card">
+            tags-with-associated-images
+          </section>
+        </main>
       </div>
 
       <style jsx>{`
+        .header {
+          grid-area: header;
+          margin: 0;
+        }
+        .sidebar {
+          grid-area: sidebar;
+        }
+
+        .create-tag {
+          min-height: 200px;
+        }
+
+        .available-tags {
+          grid-area: available-tags;
+          margin-top: 16px;
+          height: calc(100% - 200px - 16px);
+        }
+
+        .main-area {
+          grid-area: main-area;
+          position: relative;
+          height: 100%;
+          width: 100%;
+        }
+
+        .images-grid {
+          grid-area: images-grid;
+          height: 65%;
+        }
+
+        .tags-with-associated-images {
+          margin-top: 12px;
+          height: calc(35% - 12px);
+        }
+
         .image-tagger-page {
+          min-height: 100vh;
           height: 100vh;
           overflow: auto;
+          display: grid;
+          gap: 12px;
+          padding: 20px;
+          grid-template-areas:
+            "header header header header header header"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area"
+            "sidebar main-area main-area main-area main-area main-area";
         }
       `}</style>
-    </main>
+    </div>
   );
 }

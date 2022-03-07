@@ -1,0 +1,44 @@
+.header {
+  grid-area: header;
+}
+.sidebar {
+  background: yellow;
+  grid-area: sidebar;
+}
+
+.create-tag {
+  background: brown;
+  min-height: 120px;
+}
+
+.available-tags {
+  background: pink;
+  grid-area: available-tags;
+}
+
+.main-area {
+  grid-area: main-area;
+}
+
+.images-grid {
+  background: blue;
+  grid-area: images-grid;
+}
+
+.tags-with-associated-images {
+  background: silver;
+}
+
+.image-tagger-page {
+  min-height: 100%;
+  height: 100%;
+  overflow: auto;
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "sidebar main-area main-area main-area main-area main-area";
+
+  gap: 10px;
+
+  padding: 10px;
+}
