@@ -1,7 +1,15 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import {
+  RecoilRoot,
+  // atom,
+  // selector,
+  // useRecoilState,
+  // useRecoilValue,
+} from "recoil";
+
+function Cloudinary({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default Cloudinary;
