@@ -17,7 +17,12 @@ export default function Home(props) {
   return (
     <div>
       <div className="image-tagger-page">
-        <h1 className="header">Image Tagger</h1>
+        <h1 className="header title">
+          <span>IMAGE TAGGER</span>
+          <span>IMAGE TAGGER</span>
+        </h1>
+        <h2 className="title-2">By Jonathan Weiss</h2>
+
         <aside className="sidebar">
           <div className="create-tag card glass">create tag</div>
           <div className="available-tags card glass">available-tags</div>
@@ -77,6 +82,7 @@ export default function Home(props) {
           padding: 20px;
           grid-template-areas:
             "header header header header header header"
+            "header2 header2 header2 header2 header2 header2"
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"
             "sidebar main-area main-area main-area main-area main-area"

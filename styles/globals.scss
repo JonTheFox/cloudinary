@@ -1,0 +1,134 @@
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("/public/fonts/SourceSansPro-Light.ttf");
+}
+
+html,
+body {
+  font-family: "Source Sans Pro", sans-serif, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  /* box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); */
+  padding: 0.5rem;
+
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.shadow--curved,
+.card.shadow--curved {
+  box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px,
+    rgb(0 0 0 / 30%) 0px 30px 60px -30px,
+    rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.title {
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@900&display=swap");
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // flex-direction: column;
+  // background: radial-gradient(rgba(#7600bf, 0.5) 0%, transparent 70%),
+  //   linear-gradient(#0b161e 40%, #202076 70%);
+  perspective: 700px;
+  // font-size: clamp(10px, 2vw, 20px);
+}
+
+.title {
+  position: relative;
+  font-family: "Exo";
+  font-size: 2rem;
+  margin: 0;
+  transform: skew(-15deg);
+  letter-spacing: 0.03em;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -0.1em;
+    right: 0.05em;
+    width: 0.4em;
+    height: 0.4em;
+    background: radial-gradient(
+        white 3%,
+        rgba(white, 0.3) 15%,
+        rgba(white, 0.05) 60%,
+        transparent 80%
+      ),
+      radial-gradient(rgba(white, 0.2) 50%, transparent 60%) 50% 50% / 5% 100%,
+      radial-gradient(rgba(white, 0.2) 50%, transparent 60%) 50% 50% / 70% 5%;
+    background-repeat: no-repeat;
+  }
+
+  span:first-child {
+    display: block;
+    text-shadow: 0 0 0.1em #f6dddb, 0 0 0.2em #fbf8fa, 0 0 5em #edd6f6;
+    -webkit-text-stroke: 0.06em rgba(black, 0.5);
+  }
+
+  span:last-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(
+      #b6c5ed 25%,
+      #f6dddb 35%,
+      #fbf8fa 50%,
+      #edd6f6 50%,
+      #d1c2ed 55%
+    );
+    -webkit-text-stroke: 0.01em black;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.title-2 {
+  font-family: "Mr Dafoe";
+  margin: 0;
+  font-size: 2.5rem;
+  margin-top: -16px;
+  padding-left: 8px;
+  color: white;
+  text-shadow: 0 0 0.05em #fff, 0 0 0.2em #d1c2ed, 0 0 0.3em #d1c2ed;
+  transform: rotate(-7deg);
+  bottom: 52px;
+  position: relative;
+}
