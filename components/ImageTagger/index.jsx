@@ -19,12 +19,14 @@ export default function Home(props) {
       <div className="image-tagger-page">
         <h1 className="header">Image Tagger</h1>
         <aside className="sidebar">
-          <div className="create-tag card">create tag</div>
-          <div className="available-tags card">available-tags</div>
+          <div className="create-tag card glass">create tag</div>
+          <div className="available-tags card glass">available-tags</div>
         </aside>
         <main className="main-area">
-          <section className="images-grid card glass">images-grid</section>
-          <section className="tags-with-associated-images card">
+          <section className="images-grid raised--high card shadow--curved glass">
+            images-grid
+          </section>
+          <section className="tags-with-associated-images card glass">
             tags-with-associated-images
           </section>
         </main>
