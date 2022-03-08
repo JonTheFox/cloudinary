@@ -11,11 +11,9 @@ import Button from "@mui/material/Button";
 import ColorPicker from "../ColorPicker/index.jsx";
 
 export default function Home(props) {
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#7600bf");
   const [images, setImages] = useRecoilState(imagesState);
-
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-
   const [tagLabel, setTagLabel] = useState("");
   const handleTagNameChange = (event) => {
     setTagLabel(event.target.value);
@@ -47,21 +45,24 @@ export default function Home(props) {
         <label
           for="tag-creator--color-picker-btn"
           className="tag--color-hex"
-          value={name}
+          value={color}
         >
           {color}
         </label>
       </div>
 
-      <Button variant="contained">Save Tag</Button>
+      <Button id="save-tag--btn" variant="contained">
+        Save Tag
+      </Button>
 
       <style jsx>{`
         .tag-creator {
           grid-area: available-tags;
           display: flex;
           flex-direction: column;
-          height: calc(35% - 16px);
-          min-height: 200px;
+          height: 176px;
+          max-height: 176px;
+          min-height: 176px;
         }
 
         .tag-creator div:first-child {

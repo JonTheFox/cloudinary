@@ -6,6 +6,9 @@
   src: url("/fonts/SourceSansPro/SourceSansPro-Light.ttf");
 }
 
+$theme-purple--light: #d1c2ed;
+$theme-purple--dark: #7600bf;
+
 html,
 body {
   font-family: "Source Sans Pro", sans-serif, -apple-system, BlinkMacSystemFont,
@@ -56,23 +59,12 @@ html {
   overflow: hidden;
 }
 
-body {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // flex-direction: column;
-  // background: radial-gradient(rgba(#7600bf, 0.5) 0%, transparent 70%),
-  //   linear-gradient(#0b161e 40%, #202076 70%);
-  perspective: 700px;
-  // font-size: clamp(10px, 2vw, 20px);
-}
-
 .MuiList-root
   .MuiMenuItem-root
   .MuiFormGroup-root
   .MuiFormControlLabel-root
   .Mui-checked {
-  color: #7600bf;
+  color: $theme-purple--dark;
 }
 
 .title {
@@ -116,7 +108,7 @@ body {
       #f6dddb 35%,
       #fbf8fa 50%,
       #edd6f6 50%,
-      #d1c2ed 55%
+      $theme-purple--light 55%
     );
     -webkit-text-stroke: 0.01em black;
     -webkit-background-clip: text;
@@ -131,7 +123,8 @@ body {
   top: -76px;
   padding-left: 8px;
   color: white;
-  text-shadow: 0 0 0.05em #fff, 0 0 0.2em #d1c2ed, 0 0 0.3em #d1c2ed;
+  text-shadow: 0 0 0.05em #fff, 0 0 0.2em $theme-purple--light,
+    0 0 0.3em $theme-purple--light;
   transform: rotate(-7deg);
   bottom: 52px;
   position: relative;
@@ -164,15 +157,25 @@ body {
 .MuiFormControl-root {
   &.MuiTextField-root .MuiOutlinedInput-root.MuiInputBase-root fieldset,
   .Mui-focused {
-    border-color: #d1c2ed;
-    color: #d1c2ed;
+    border-color: $theme-purple--light;
+    color: $theme-purple--light;
   }
 }
 
 .MuiButton-root.MuiButton-contained.MuiButtonBase-root {
-  border-color: #d1c2ed;
-  background-color: #d1c2ed;
+  border-color: $theme-purple--light;
+  background-color: $theme-purple--light;
   color: white;
+
+  &#save-tag--btn {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    margin: 0;
+    left: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 #weiss-color-picker--set-button---container {

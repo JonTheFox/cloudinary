@@ -19,7 +19,7 @@ export default function Home(props) {
         .available-tags {
           grid-area: available-tags;
           margin-top: 16px;
-          height: calc(65% - 16px);
+          height: calc(100% - 176px - 32px);
         }
       `}</style>
     </div>
