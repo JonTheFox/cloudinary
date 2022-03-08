@@ -153,6 +153,9 @@ function ImagesGrid(props) {
           grid-area: images-grid;
           height: 65%;
           max-height: 53vh;
+          width: 100%;
+          min-width: 100%;
+          min-height: 53vh;
           overflow: auto;
         }
 
@@ -167,11 +170,11 @@ function ImagesGrid(props) {
           transition: 0.1s;
           height: auto;
           position: relative;
-          max-width: calc(33.3333% - 1rem);
-          padding: 0.5rem;
+          max-width: calc(33.3333% - 0.5rem);
+          padding: 0.25rem;
           transition: all 0.1s;
-          margin-right: 0.5rem;
-          margin-left: 0.5rem;
+          margin-right: 0.25rem;
+          margin-left: 0.25rem;
         }
 
         .image:hover {
