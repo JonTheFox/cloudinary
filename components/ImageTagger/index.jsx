@@ -129,14 +129,17 @@ export default function Home(props) {
         }
 
         .image {
-          width: 100%;
           height: auto;
           position: relative;
+          max-width: 30%;
+          transition: all 0.1s;
         }
 
-        .image {
-          max-width: 30%;
+        .image:hover {
           height: auto;
+          position: relative;
+          max-width: 30%;
+          transform: scale(1.05);
         }
       `}</style>
     </div>
