@@ -8,6 +8,7 @@
 
 $theme-purple--light: #d1c2ed;
 $theme-purple--dark: #7600bf;
+$theme-brown--light: #f6dddb;
 
 html,
 body {
@@ -166,6 +167,11 @@ html {
   border-color: $theme-purple--light;
   background-color: $theme-purple--light;
   color: white;
+
+  &.Mui-disabled {
+    border-color: $theme-brown--light;
+    background-color: $theme-brown--light;
+  }
 
   &#save-tag--btn {
     position: absolute;

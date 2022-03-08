@@ -18,11 +18,37 @@ export default function Home(props) {
   const [tagLabel, setTagLabel] = useState("");
   const [isTagValid, setIsTagValid] = useState(false); // todo: change the initial value
 
-  const handleSave = useCallback(() => {
+  const saveTag = useCallback(() => {
     debugger;
     if (!isTagValid) return;
     // TODO: add the tag to the global state
-  }, [isTagValid]);
+    setTags((prevTags) => {
+      // recoil doesn't allow mutating state properties,
+      // so we make deep clones of them first
+
+      const updatedTags = _.cloneDeep(prevTags);
+      updatedTags[tagLabel] = {
+        label: tagLabel,
+        color: tagColor,
+        tagId: Date.now(),
+      };
+
+      debugger;
+      return updatedTags;
+
+      // const updatedSelectedImage = _.cloneDeep(selectedImage);
+      // // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
+      // const updatedSelectedImageTags =
+      //   { ...prevTags[selectedImageIndex].tags } || {};
+
+      // updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
+      // updatedSelectedImageTags[tagLabel] = checked ? tag : undefined;
+      // updatedSelectedImage.tags = updatedSelectedImageTags;
+      // updatedImages[selectedImageIndex] = updatedSelectedImage;
+
+      // return updatedImages;
+    });
+  }, [isTagValid, setTags, tagLabel, tagColor]);
 
   const handleTagNameChange = useCallback(
     (event) => {
@@ -76,7 +102,12 @@ export default function Home(props) {
         </label>
       </div>
 
-      <Button id="save-tag--btn" variant="contained" onClick={handleSave}>
+      <Button
+        id="save-tag--btn"
+        variant="contained"
+        onClick={saveTag}
+        disabled={!isTagValid}
+      >
         Save Tag
       </Button>
 
