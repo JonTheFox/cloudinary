@@ -9,12 +9,20 @@ import selectedImageState from "../../store/atoms/selectedImage.js";
 
 function TagMenuItem(props) {
   const selectedImage = useRecoilValue(selectedImageState);
+  const [checked, setChecked] = useState(
+    selectedImage?.tags?.[props?.tag?.tagId]
+  );
+
+  useEffect(() => {
+    setChecked(selectedImage?.tags?.[props?.tag?.tagId]);
+  }, [selectedImage]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState();
 
   const handleChange = (event) => {
     const { label, tagId, color } = props.tag;
     const nowChecked = event.target.checked;
+    setChecked(nowChecked);
     props.onCheck?.({
       tag: { label, tagId, color },
       checked: nowChecked,
@@ -32,7 +40,7 @@ function TagMenuItem(props) {
         <FormControlLabel
           control={
             <Checkbox
-              checked={selectedImage?.tags?.[props?.tag?.tagId]}
+              checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />

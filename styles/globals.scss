@@ -68,6 +68,14 @@ body {
   // font-size: clamp(10px, 2vw, 20px);
 }
 
+.MuiList-root
+  .MuiMenuItem-root
+  .MuiFormGroup-root
+  .MuiFormControlLabel-root
+  .Mui-checked {
+  color: #7600bf;
+}
+
 .title {
   position: relative;
   font-family: "Exo";

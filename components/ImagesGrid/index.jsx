@@ -60,11 +60,6 @@ function ImagesGrid(props) {
         // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
         const updatedSelectedImageTags =
           { ...prevImages[selectedImageIndex].tags } || {};
-        if (checked) {
-          updatedSelectedImageTags[tagId] = tag;
-        } else {
-          delete updatedSelectedImageTags[tagId];
-        }
 
         updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
         updatedSelectedImageTags[tagId] = checked ? tag : undefined;
