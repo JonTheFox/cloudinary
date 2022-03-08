@@ -7,6 +7,7 @@ import selectedImageState from "../../store/atoms/selectedImage.js";
 import ImagesGrid from "../ImagesGrid/index.jsx";
 import TageWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function Home(props) {
   const [tags, setTags] = useRecoilState(tagsState);
@@ -22,21 +23,25 @@ export default function Home(props) {
   return (
     <div className="tag-creator card glass">
       <TextField
-        label="Add label"
+        class="tag-label-input"
+        label="Add tag"
         variant="outlined"
         color="success"
         value={name}
         onChange={handleChange}
       />
+      <Button variant="contained">Add</Button>
       <style jsx>{`
         .tag-creator {
+          grid-area: available-tags;
+          display: flex;
+          flex-direction: column;
+          height: calc(35% - 16px);
           min-height: 200px;
         }
 
-        .tag-creator {
-          grid-area: available-tags;
-
-          height: calc(35% - 16px);
+        .tag-creator div:first-child {
+          margin-bottom: 0.5rem;
         }
       `}</style>
     </div>

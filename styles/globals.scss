@@ -168,3 +168,10 @@ body {
     color: #d1c2ed;
   }
 }
+
+.MuiButton-root.MuiButton-contained.MuiButtonBase-root {
+  border-color: #d1c2ed;
+  background-color: #d1c2ed;
+  color: white;
+  margin-top: 0.5rem;
+}
