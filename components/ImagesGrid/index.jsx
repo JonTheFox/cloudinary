@@ -69,11 +69,11 @@ function ImagesGrid(props) {
         .image {
           height: auto;
           position: relative;
-          max-width: calc(33.3333% - 0.5rem);
+          max-width: calc(33.3333% - 1rem);
           padding: 0.5rem;
           transition: all 0.1s;
-          margin-right: 0.25rem;
-          margin-left: 0.25rem;
+          margin-right: 0.5rem;
+          margin-left: 0.5rem;
         }
 
         .image.is-selected {

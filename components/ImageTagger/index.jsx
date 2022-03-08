@@ -60,6 +60,7 @@ export default function Home(props) {
         }
         .sidebar {
           grid-area: sidebar;
+          width: 200px;
         }
 
         .main-area {
@@ -84,11 +85,11 @@ export default function Home(props) {
           gap: 12px;
           padding: 20px;
           grid-template-areas:
-            "header header header header header header"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area";
+            "header header header header "
+            "sidebar sidebar main-area main-area  "
+            "sidebar sidebar main-area main-area "
+            "sidebar sidebar main-area main-area "
+            "sidebar sidebar main-area main-area ";
         }
 
         .img-container {
