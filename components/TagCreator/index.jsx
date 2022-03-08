@@ -11,18 +11,36 @@ import Button from "@mui/material/Button";
 import ColorPicker from "../ColorPicker/index.jsx";
 
 export default function Home(props) {
-  const [color, setColor] = useState("#7600bf");
+  const [tagColor, setTagColor] = useState("#7600bf");
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [tagLabel, setTagLabel] = useState("");
-  const handleTagNameChange = (event) => {
-    setTagLabel(event.target.value);
-  };
+  const [isTagValid, setIsTagValid] = useState(false); // todo: change the initial value
 
-  const handleColorSelect = useCallback((newColor) => {
-    setColor(newColor);
-    console.log("new color selected: ", newColor);
-  });
+  const handleSave = useCallback(() => {
+    debugger;
+    if (!isTagValid) return;
+    // todo: add the tag to the global state
+  }, [isTagValid]);
+
+  const handleTagNameChange = useCallback(
+    (event) => {
+      setTagLabel(event.target.value);
+    },
+    [setTagLabel]
+  );
+
+  useEffect(() => {
+    setIsTagValid(!!(tagLabel && tagColor));
+  }, [tagLabel, tagColor]);
+
+  const handleColorSelect = useCallback(
+    (newColor) => {
+      setTagColor(newColor);
+      console.log("new tagColor selected: ", newColor);
+    },
+    [setTagColor]
+  );
 
   return (
     <div className="tag-creator card glass">
@@ -38,20 +56,16 @@ export default function Home(props) {
       <div className="tag-color-controls">
         <ColorPicker
           onSelect={handleColorSelect}
-          openButtonBgColor={color}
+          openButtonBgColor={tagColor}
           openButtonId="tag-creator--color-picker-btn"
         />
 
-        <label
-          for="tag-creator--color-picker-btn"
-          className="tag--color-hex"
-          value={color}
-        >
-          {color}
+        <label for="tag-creator--color-picker-btn" className="tag--color-hex">
+          {tagColor}
         </label>
       </div>
 
-      <Button id="save-tag--btn" variant="contained">
+      <Button id="save-tag--btn" variant="contained" onClick={handleSave}>
         Save Tag
       </Button>
 
