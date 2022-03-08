@@ -160,3 +160,11 @@ body {
     top: -20px;
   }
 }
+
+.MuiFormControl-root {
+  &.MuiTextField-root .MuiOutlinedInput-root.MuiInputBase-root fieldset,
+  .Mui-focused {
+    border-color: #d1c2ed;
+    color: #d1c2ed;
+  }
+}
