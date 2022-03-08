@@ -95,7 +95,8 @@ function ImagesGrid(props) {
   }, [selectedImage]);
 
   const renderMenu = useCallback(() => {
-    if (!tags?.length) return;
+    const tagsArray = Object.entries(tags);
+    if (!tagsArray?.length) return;
     return (
       <Menu
         id="basic-menu"
@@ -107,16 +108,12 @@ function ImagesGrid(props) {
           horizontal: "left",
         }}
       >
-        {tags.map((tag = {}) => {
+        {tagsArray?.map(([tagLabel, tag]) => {
           const { tagId } = tag;
           if (!tagId) return null;
-          console.log("selected image:", selectedImage);
-          console.log(
-            "selected image has tagId: ",
-            selectedImage?.tags?.[tagId] === tagId
+          return (
+            <TagMenuItem tag={tag} key={tagLabel} onCheck={addOrRemoveTag} />
           );
-
-          return <TagMenuItem tag={tag} key={tagId} onCheck={addOrRemoveTag} />;
         })}
       </Menu>
     );
@@ -132,19 +129,16 @@ function ImagesGrid(props) {
   return (
     <div>
       <section className="images-grid raised--high card shadow--curved glass">
-        {images?.map(({ url, id, author }, imageIndex) => {
+        {images?.map(({ url, id }, imageIndex) => {
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
+
           return (
-            <>
-              <img
-                key={id}
-                className={`image card ${
-                  isSelectedImageIndex && "is-selected"
-                }`}
-                onClick={(event) => selectImage(event, { imageIndex })}
-                src={url}
-              />
-            </>
+            <img
+              key={id}
+              className={`image card ${isSelectedImageIndex && "is-selected"}`}
+              onClick={(event) => selectImage(event, { imageIndex })}
+              src={url}
+            />
           );
         })}
         {renderMenu()}

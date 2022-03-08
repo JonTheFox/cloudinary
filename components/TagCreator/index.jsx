@@ -19,7 +19,6 @@ export default function Home(props) {
   const [isTagValid, setIsTagValid] = useState(false); // todo: change the initial value
 
   const saveTag = useCallback(() => {
-    debugger;
     if (!isTagValid) return;
     // TODO: add the tag to the global state
     setTags((prevTags) => {
@@ -33,7 +32,6 @@ export default function Home(props) {
         tagId: Date.now(),
       };
 
-      debugger;
       return updatedTags;
 
       // const updatedSelectedImage = _.cloneDeep(selectedImage);
