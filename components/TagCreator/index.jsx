@@ -13,6 +13,7 @@ import ColorPicker from "../ColorPicker/index.jsx";
 export default function Home(props) {
   const [tagColor, setTagColor] = useState("#7600bf");
   const [images, setImages] = useRecoilState(imagesState);
+  const [tags, setTags] = useRecoilState(tagsState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [tagLabel, setTagLabel] = useState("");
   const [isTagValid, setIsTagValid] = useState(false); // todo: change the initial value
@@ -20,7 +21,7 @@ export default function Home(props) {
   const handleSave = useCallback(() => {
     debugger;
     if (!isTagValid) return;
-    // todo: add the tag to the global state
+    // TODO: add the tag to the global state
   }, [isTagValid]);
 
   const handleTagNameChange = useCallback(
@@ -31,8 +32,15 @@ export default function Home(props) {
   );
 
   useEffect(() => {
-    setIsTagValid(!!(tagLabel && tagColor));
-  }, [tagLabel, tagColor]);
+    const isFormFilled = !!(tagLabel && tagColor);
+    if (!isFormFilled) return setIsTagValid(false);
+    const isLabelUnique = !Object.keys(tags).includes?.(tagLabel);
+    setIsTagValid(isLabelUnique);
+  }, [tagLabel, tagColor, tags]);
+
+  useEffect(() => {
+    console.log("tags: ", tags);
+  }, [tags]);
 
   const handleColorSelect = useCallback(
     (newColor) => {
@@ -60,7 +68,10 @@ export default function Home(props) {
           openButtonId="tag-creator--color-picker-btn"
         />
 
-        <label for="tag-creator--color-picker-btn" className="tag--color-hex">
+        <label
+          htmlFor="tag-creator--color-picker-btn"
+          className="tag--color-hex"
+        >
           {tagColor}
         </label>
       </div>

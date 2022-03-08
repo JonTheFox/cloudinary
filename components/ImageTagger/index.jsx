@@ -8,6 +8,7 @@ import ImagesGrid from "../ImagesGrid/index.jsx";
 import TagsWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import TagCreator from "../TagCreator/index.jsx";
 import AvailableTags from "../AvailableTags/index.jsx";
+
 export default function Home(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
@@ -22,7 +23,7 @@ export default function Home(props) {
         const pics = await response.json();
         const mappedPics = pics.map((pic) => {
           const { download_url: url, id, author } = pic;
-          return { url, id, author, tags: [] };
+          return { url, id, author, tags: {} };
         });
 
         setImages(mappedPics);

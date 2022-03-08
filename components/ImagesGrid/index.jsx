@@ -52,9 +52,11 @@ function ImagesGrid(props) {
       if (!selectedImage) {
         return null;
       }
-      const { tagId } = tag;
+      const { label: tagLabel } = tag;
 
       setImages((prevImages) => {
+        // recoild doesn't allow mutating state properties,
+        // so we make deep clones of them first
         const updatedImages = _.cloneDeep(prevImages);
         const updatedSelectedImage = _.cloneDeep(selectedImage);
         // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
@@ -62,7 +64,7 @@ function ImagesGrid(props) {
           { ...prevImages[selectedImageIndex].tags } || {};
 
         updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
-        updatedSelectedImageTags[tagId] = checked ? tag : undefined;
+        updatedSelectedImageTags[tagLabel] = checked ? tag : undefined;
         updatedSelectedImage.tags = updatedSelectedImageTags;
         updatedImages[selectedImageIndex] = updatedSelectedImage;
 

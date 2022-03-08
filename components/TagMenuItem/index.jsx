@@ -10,11 +10,11 @@ import selectedImageState from "../../store/atoms/selectedImage.js";
 function TagMenuItem(props) {
   const selectedImage = useRecoilValue(selectedImageState);
   const [checked, setChecked] = useState(
-    selectedImage?.tags?.[props?.tag?.tagId]
+    selectedImage?.tags?.[props?.tag?.label]
   );
 
   useEffect(() => {
-    setChecked(selectedImage?.tags?.[props?.tag?.tagId]);
+    setChecked(selectedImage?.tags?.[props?.tag?.label]);
   }, [selectedImage]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState();

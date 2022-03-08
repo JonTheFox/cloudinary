@@ -10,9 +10,12 @@ function ColorPicker(props) {
   const openBtnRef = useRef(null);
   const [color, setColor] = useState("#aabbcc");
 
-  const handleClick = (event) => {
-    setAnchorEl(openBtnRef.current);
-  };
+  const handleClick = useCallback(
+    (event) => {
+      setAnchorEl(openBtnRef.current);
+    },
+    [setAnchorEl, openBtnRef]
+  );
 
   const handleColorSet = useCallback(() => {
     console.log("selected color:", color);
