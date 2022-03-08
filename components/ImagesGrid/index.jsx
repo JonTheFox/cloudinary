@@ -1,5 +1,9 @@
 import { Component, useState } from "react/cjs/react.development";
 import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import TagMenuItem from "../TagMenuItem/index.jsx";
+
 import { useRecoilState } from "recoil";
 import { useEffect } from "react/cjs/react.development";
 import tagsState from "../../store/atoms/tags.js";
@@ -11,10 +15,25 @@ function ImagesGrid(props) {
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuSelect = ({ tag, tagIndex }) => {
+    // tag the photo with the selected tag
+    closeMenu();
+  };
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const selectImage = ({ imageIndex }) => {
+  const selectImage = (event, { imageIndex }) => {
     console.log(imageIndex);
+
+    // open the menu
+    setAnchorEl(event.currentTarget);
 
     setSelectedImageIndex(imageIndex);
     setSelectedImage(images[imageIndex]);
@@ -33,7 +52,6 @@ function ImagesGrid(props) {
         setImages(mappedPics);
       }
     );
-    setTags(["hey", "hi"]);
   }, []);
 
   return (
@@ -43,15 +61,47 @@ function ImagesGrid(props) {
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
           return (
-            <img
-              key={id}
-              className={`image card ${isSelectedImageIndex && "is-selected"}`}
-              onClick={() => selectImage({ imageIndex })}
-              src={url}
-            />
+            <>
+              {tags?.length && (
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={closeMenu}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  {tags?.map((tag, tagIndex) => {
+                    const { label = "", color = "white", id } = tag;
+                    if (!id) return null;
+
+                    return (
+                      <TagMenuItem
+                        key={id}
+                        label={label}
+                        color={color}
+                        isChecked={false}
+                        onCheck={({ tag, tagIndex }) => handleMenuSelect}
+                      />
+                    );
+                  })}
+                </Menu>
+              )}
+              <img
+                key={id}
+                className={`image card ${
+                  isSelectedImageIndex && "is-selected"
+                }`}
+                onClick={(event) => selectImage(event, { imageIndex })}
+                src={url}
+              />
+            </>
           );
         })}
       </section>
+
       <style jsx>{`
         .images-grid {
           grid-area: images-grid;
@@ -67,6 +117,8 @@ function ImagesGrid(props) {
         }
 
         .image {
+          opacity: 0.8;
+          transition: 0.1s;
           height: auto;
           position: relative;
           max-width: calc(33.3333% - 1rem);
@@ -76,11 +128,8 @@ function ImagesGrid(props) {
           margin-left: 0.5rem;
         }
 
-        .image.is-selected {
-          height: auto;
-          position: relative;
-
-          transform: scale(1.05);
+        .image:hover {
+          opacity: 1;
         }
 
         .image.is-selected:after {

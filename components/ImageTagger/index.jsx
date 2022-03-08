@@ -28,7 +28,6 @@ export default function Home(props) {
         setImages(mappedPics);
       }
     );
-    setTags(["hey", "hi"]);
   }, []);
 
   return (
@@ -108,22 +107,10 @@ export default function Home(props) {
           margin-left: 0.5rem;
         }
 
-        .image.is-selected {
+        .image:hover {
           height: auto;
           position: relative;
-
           transform: scale(1.05);
-        }
-
-        .image.is-selected:after {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          content: "";
-          background: black;
-          opacity: 0.5;
         }
       `}</style>
     </div>

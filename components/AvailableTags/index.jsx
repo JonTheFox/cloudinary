@@ -26,7 +26,6 @@ export default function Home(props) {
         setImages(mappedPics);
       }
     );
-    setTags(["hey", "hi"]);
   }, []);
 
   return (
