@@ -175,6 +175,31 @@ function ImagesGrid(props) {
           transition: all 0.1s;
           margin-right: 0.25rem;
           margin-left: 0.25rem;
+          border-radius: 10px;
+        }
+
+        @media screen and (min-width: 1000px) {
+          .image {
+            max-width: calc(25% - 0.5rem);
+          }
+        }
+
+        @media screen and (min-width: 1600px) {
+          .image {
+            max-width: calc(20% - 0.5rem);
+          }
+        }
+
+        @media screen and (max-width: 800px) {
+          .image {
+            max-width: calc(50% - 0.5rem);
+          }
+        }
+
+        @media screen and (max-width: 600px) {
+          .image {
+            max-width: calc(100% - 0.5rem);
+          }
         }
 
         .image:hover {
