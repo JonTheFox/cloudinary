@@ -1,4 +1,4 @@
-import { Component, useState } from "react/cjs/react.development";
+import { Component, useState, useCallback } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react/cjs/react.development";
 import tagsState from "../../store/atoms/tags.js";
@@ -8,29 +8,53 @@ import ImagesGrid from "../ImagesGrid/index.jsx";
 import TageWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import ColorPicker from "../ColorPicker/index.jsx";
 
 export default function Home(props) {
-  const [tags, setTags] = useRecoilState(tagsState);
+  const [color, setColor] = useState("");
   const [images, setImages] = useRecoilState(imagesState);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const [name, setName] = useState("Cat in the Hat");
-  const handleChange = (event) => {
-    setName(event.target.value);
+  const [tagLabel, setTagLabel] = useState("");
+  const handleTagNameChange = (event) => {
+    setTagLabel(event.target.value);
   };
+
+  const handleColorSelect = useCallback((newColor) => {
+    setColor(newColor);
+    console.log("new color selected: ", newColor);
+  });
 
   return (
     <div className="tag-creator card glass">
       <TextField
-        class="tag-label-input"
-        label="Add tag"
+        className="tag-label-input"
+        label="Label"
         variant="outlined"
         color="success"
-        value={name}
-        onChange={handleChange}
+        value={tagLabel}
+        onChange={handleTagNameChange}
       />
-      <Button variant="contained">Add</Button>
+
+      <div className="tag-color-controls">
+        <ColorPicker
+          onSelect={handleColorSelect}
+          openButtonBgColor={color}
+          openButtonId="tag-creator--color-picker-btn"
+        />
+
+        <label
+          for="tag-creator--color-picker-btn"
+          className="tag--color-hex"
+          value={name}
+        >
+          {color}
+        </label>
+      </div>
+
+      <Button variant="contained">Save Tag</Button>
+
       <style jsx>{`
         .tag-creator {
           grid-area: available-tags;
@@ -42,6 +66,17 @@ export default function Home(props) {
 
         .tag-creator div:first-child {
           margin-bottom: 0.5rem;
+        }
+
+        .tag-color-controls {
+          display: flex;
+          margin-top: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .tag--color-hex {
+          height: auto;
+          margin: auto;
         }
       `}</style>
     </div>

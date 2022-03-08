@@ -173,5 +173,17 @@ body {
   border-color: #d1c2ed;
   background-color: #d1c2ed;
   color: white;
-  margin-top: 0.5rem;
+}
+
+#weiss-color-picker--set-button---container {
+  padding: 0.25rem 0 0 0;
+}
+
+#weiss-color-picker--set-button {
+  margin: auto;
+  width: 100%;
+}
+
+.MuiPaper-root {
+  padding: 0.25rem;
 }
