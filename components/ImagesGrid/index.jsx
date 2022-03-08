@@ -43,44 +43,10 @@ function ImagesGrid(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setAnchorEl(null);
-  };
-
-  const addOrRemoveTag = useCallback(
-    ({ tag, checked }) => {
-      if (!selectedImage) {
-        return null;
-      }
-      const { label: tagLabel } = tag;
-
-      setImages((prevImages) => {
-        // recoild doesn't allow mutating state properties,
-        // so we make deep clones of them first
-        const updatedImages = _.cloneDeep(prevImages);
-        const updatedSelectedImage = _.cloneDeep(selectedImage);
-        // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
-        const updatedSelectedImageTags =
-          { ...prevImages[selectedImageIndex].tags } || {};
-
-        updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
-        updatedSelectedImageTags[tagLabel] = checked ? tag : undefined;
-        updatedSelectedImage.tags = updatedSelectedImageTags;
-        updatedImages[selectedImageIndex] = updatedSelectedImage;
-
-        return updatedImages;
-      });
-
-      // const _selectedImageIndex = statesRefs.current.selectedImageIndex;
-      // const _selectedImage = statesRefs.current.selectedImage;
-
-      //clone the images state
-      const updatedImages = [...images];
-      const updatedSelectedImage = { ...selectedImage };
-      const updatedSelectedImageTags = { ...updatedSelectedImage.tags } || {};
-    },
-    [images, setImages, selectedImageIndex, selectedImage]
-  );
+    updateImageTags();
+  }, [setAnchorEl]);
 
   const selectImage = async (event, { imageIndex }) => {
     const selectedImageEl = event.currentTarget;
@@ -90,6 +56,59 @@ function ImagesGrid(props) {
     setAnchorEl(selectedImageEl);
   };
 
+  const getCheckedTagsTuples = (image) => {
+    if (!image) return null;
+    if (!image.tags) {
+      return [];
+    }
+    return Object.entries(image.tags);
+  };
+
+  const checkedTags = useRef(getCheckedTagsTuples(selectedImage) || []);
+
+  const handleTagCheck = useCallback(
+    ({ tag, tagLabel, checked }) => {
+      if (!checked) {
+        const tagInArray = checkedTags?.current?.find?.(
+          ({ tagLabel: checkedTagLabel }) => {
+            return checkedTagLabel === tagLabel;
+          }
+        );
+
+        if (!tagInArray) return;
+
+        const indexOfTagToRemove = checkedTags?.current?.indexOf(tagInArray);
+        checkedTags?.current?.splice(
+          indexOfTagToRemove, //TODO: get the index of the tag to remove
+          1
+        );
+        return;
+
+        // return delete checkedTags?.current?.[indexOfTagToRemove]; //ERROR HERE. splice instead
+      }
+      checkedTags.current.push({ tagLabel, tag });
+    },
+    [checkedTags.current]
+  );
+
+  const updateImageTags = useCallback(() => {
+    setImages((prevImages = []) => {
+      // recoil doesn't allow mutating state properties,
+      // so we make deep clones of them first
+      const imagesClone = _.cloneDeep(prevImages);
+      const selectedImageClone = _.cloneDeep(selectedImage || {});
+      checkedTags.current?.forEach(({ tagLabel, tag }) => {
+        selectedImageClone.tags[tagLabel] = tag;
+      });
+
+      imagesClone[selectedImageIndex].tags = selectedImageClone.tags;
+
+      return imagesClone;
+    });
+
+    setAnchorEl(null);
+  }, [checkedTags.current, selectedImage]);
+
   useEffect(() => {
     console.log("selectedImage: ", selectedImage);
   }, [selectedImage]);
@@ -97,6 +116,7 @@ function ImagesGrid(props) {
   const renderMenu = useCallback(() => {
     const tagsArray = Object.entries(tags || []);
     if (!tagsArray?.length) return;
+
     return (
       <Menu
         id="basic-menu"
@@ -109,12 +129,25 @@ function ImagesGrid(props) {
         }}
       >
         {tagsArray?.map(([tagLabel, tag]) => {
+          console.log("tagLabel: ", tagLabel);
           const { tagId } = tag;
           if (!tagId) return null;
           return (
-            <TagMenuItem tag={tag} key={tagLabel} onCheck={addOrRemoveTag} />
+            <TagMenuItem
+              tag={tag}
+              tagLabel={tagLabel}
+              key={tagLabel}
+              onCheck={handleTagCheck}
+            />
           );
         })}
+        <Button
+          variant="outlined"
+          className="apply-tags-btn"
+          onClick={updateImageTags}
+        >
+          Apply
+        </Button>
       </Menu>
     );
   }, [
@@ -123,7 +156,8 @@ function ImagesGrid(props) {
     isMenuOpen,
     closeMenu,
     selectedImage,
-    addOrRemoveTag,
+    updateImageTags,
+    handleTagCheck,
   ]);
 
   return (

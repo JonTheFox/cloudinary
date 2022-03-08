@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import selectedImageState from "../../store/atoms/selectedImage.js";
+import { Button } from "@mui/material";
 
 function TagMenuItem(props) {
   const selectedImage = useRecoilValue(selectedImageState);
@@ -14,18 +15,18 @@ function TagMenuItem(props) {
   );
 
   useEffect(() => {
-    setChecked(!!selectedImage?.tags?.[props?.tag?.label]);
+    setChecked(!!selectedImage?.tags?.[props?.tagLabel]);
   }, [selectedImage]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState();
 
-  const handleChange = (event) => {
-    const { label, tagId, color } = props.tag;
-    const nowChecked = event.target.checked;
-    setChecked(nowChecked);
+  const handleCheckboxChange = (event) => {
+    const isNowChecked = event.target.checked;
+    setChecked(isNowChecked);
     props.onCheck?.({
-      tag: { label, tagId, color },
-      checked: nowChecked,
+      tag: props.tag,
+      tagLabel: props.tagLabel,
+      checked: isNowChecked,
     });
   };
 
@@ -36,11 +37,11 @@ function TagMenuItem(props) {
           control={
             <Checkbox
               checked={checked}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
               inputProps={{ "aria-label": "controlled" }}
             />
           }
-          label={props.tag?.label}
+          label={props.tagLabel || ""}
         />
       </FormGroup>
     </MenuItem>
@@ -49,6 +50,7 @@ function TagMenuItem(props) {
 
 TagMenuItem.propTypes = {
   tag: PropTypes.object,
+  tagLabel: PropTypes.string,
 };
 
 export default TagMenuItem;
