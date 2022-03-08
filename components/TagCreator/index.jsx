@@ -87,6 +87,12 @@ export default function Home(props) {
         onChange={handleTagNameChange}
       />
 
+      <div
+        className={`tag-invalid-msg ${isTagValid ? "is-hidden" : "is-shown"}`}
+      >
+        <span>Please enter a unique label</span>
+      </div>
+
       <div className="tag-color-controls">
         <ColorPicker
           onSelect={handleColorSelect}
@@ -134,6 +140,13 @@ export default function Home(props) {
         .tag--color-hex {
           height: auto;
           margin: auto;
+        }
+
+        .tag-invalid-msg {
+          font-size: 0.85rem;
+        }
+        .tag-invalid-msg.is-hidden {
+          opacity: 0;
         }
       `}</style>
     </div>
