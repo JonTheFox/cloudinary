@@ -1,18 +1,24 @@
 import { Component, useState } from "react/cjs/react.development";
+import PropTypes from "prop-types";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react/cjs/react.development";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
-import ImagesGrid from "../ImagesGrid/index.jsx";
-import TagsWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
-import TagCreator from "../TagCreator/index.jsx";
-import AvailableTags from "../AvailableTags/index.jsx";
-export default function Home(props) {
+
+function ImagesGrid(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
+  const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
+  const selectImage = ({ imageIndex }) => {
+    console.log(imageIndex);
+
+    setSelectedImageIndex(imageIndex);
+    setSelectedImage(images[imageIndex]);
+  };
 
   //on mounted
   useEffect(() => {
@@ -24,7 +30,6 @@ export default function Home(props) {
           const { download_url: url, id, author } = pic;
           return { url, id, author };
         });
-
         setImages(mappedPics);
       }
     );
@@ -33,62 +38,26 @@ export default function Home(props) {
 
   return (
     <div>
-      <div className="image-tagger-page">
-        <div className="header">
-          <h1 className="title">
-            <span>IMAGE TAGGER</span>
-            <span>IMAGE TAGGER</span>
-          </h1>
-          <h2 className="title-2">By Jonathan Weiss</h2>
-        </div>
+      <section className="images-grid raised--high card shadow--curved glass">
+        {images?.map(({ url, id, author }, imageIndex) => {
+          const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
-        <aside className="sidebar">
-          <TagCreator />
-          <AvailableTags />
-        </aside>
-        <main className="main-area">
-          <ImagesGrid />
-          <TagsWithAssociatedImages />
-        </main>
-      </div>
-
+          return (
+            <img
+              key={id}
+              className={`image card ${isSelectedImageIndex && "is-selected"}`}
+              onClick={() => selectImage({ imageIndex })}
+              src={url}
+            />
+          );
+        })}
+      </section>
       <style jsx>{`
-        .header {
-          grid-area: header;
-          margin: 0;
-          height: 30px;
-        }
-        .sidebar {
-          grid-area: sidebar;
-        }
-
-        .main-area {
-          grid-area: main-area;
-          position: relative;
-          height: 100%;
-          width: 100%;
-        }
-
         .images-grid {
           grid-area: images-grid;
           height: 65%;
           max-height: 53vh;
           overflow: auto;
-        }
-
-        .image-tagger-page {
-          min-height: 100vh;
-          height: 100vh;
-          overflow: auto;
-          display: grid;
-          gap: 12px;
-          padding: 20px;
-          grid-template-areas:
-            "header header header header header header"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area"
-            "sidebar sidebar main-area main-area main-area main-area";
         }
 
         .img-container {
@@ -100,11 +69,11 @@ export default function Home(props) {
         .image {
           height: auto;
           position: relative;
-          max-width: calc(33.3333% - 1rem);
-          padding: 1rem;
+          max-width: calc(33.3333% - 0.5rem);
+          padding: 0.5rem;
           transition: all 0.1s;
-          margin-right: 0.5rem;
-          margin-left: 0.5rem;
+          margin-right: 0.25rem;
+          margin-left: 0.25rem;
         }
 
         .image.is-selected {
@@ -128,3 +97,5 @@ export default function Home(props) {
     </div>
   );
 }
+
+export default ImagesGrid;
