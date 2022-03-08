@@ -12,7 +12,7 @@ import ImagesGrid from "../ImagesGrid/index.jsx";
 import TageWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
-export default function Home(props) {
+export default function AvailableTags(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -32,6 +32,7 @@ export default function Home(props) {
             <div
               className="tag-container"
               style={{ backgroundColor: color || "" }}
+              key={tagLabel}
             >
               <span className="tab-label">{tagLabel || ""}</span>
               <DeleteOutlinedIcon

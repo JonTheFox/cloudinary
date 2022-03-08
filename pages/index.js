@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Cloudinary Task</title>
+        <title>Image Tagger</title>
         <meta name="description" content="A home exercise by Jonathan Weiss" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -18,10 +18,6 @@ export default function Home() {
           <ImageTagger />
         </main>
       </RecoilRoot>
-
-      <footer className={styles.footer}>
-        <span>Created by Jonathan Weiss</span>
-      </footer>
     </div>
   );
 }

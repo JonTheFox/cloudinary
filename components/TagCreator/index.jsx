@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ColorPicker from "../ColorPicker/index.jsx";
 
-export default function Home(props) {
+export default function TagCreator(props) {
   const [tagColor, setTagColor] = useState("#7600bf");
   const [images, setImages] = useRecoilState(imagesState);
   const [tags, setTags] = useRecoilState(tagsState);
