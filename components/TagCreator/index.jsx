@@ -123,6 +123,7 @@ export default function TagCreator(props) {
           height: 176px;
           max-height: 176px;
           min-height: 176px;
+          overflow: hidden;
         }
 
         .tag-creator div:first-child {
@@ -142,6 +143,9 @@ export default function TagCreator(props) {
 
         .tag-invalid-msg {
           font-size: 0.85rem;
+          padding-top: 4px;
+          padding-left: 2px;
+          padding-bottom: 4px;
         }
         .tag-invalid-msg.is-hidden {
           opacity: 0;

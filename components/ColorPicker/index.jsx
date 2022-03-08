@@ -35,6 +35,7 @@ function ColorPicker(props) {
       <Button
         aria-describedby={id}
         variant="contained"
+        size="small"
         onClick={handleClick}
         ref={openBtnRef}
         style={{ backgroundColor: props.openButtonBgColor || "" }}
