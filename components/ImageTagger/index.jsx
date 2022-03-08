@@ -51,7 +51,7 @@ export default function Home(props) {
               console.log("url: ", url);
               return (
                 <div key={id} className="img-container card">
-                  <img className="image" src={url} />
+                  <img className="image card" src={url} />
                 </div>
               );
             })}
@@ -122,8 +122,16 @@ export default function Home(props) {
         }
 
         .img-container {
-          width: auto;
+          //   width: auto;
+          width: 100%;
+          height: auto;
           display: inline;
+        }
+
+        .image {
+          width: 100%;
+          height: auto;
+          position: relative;
         }
 
         .image {
