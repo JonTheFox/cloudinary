@@ -10,6 +10,12 @@ $theme-purple--light: #d1c2ed;
 $theme-purple--dark: #7600bf;
 $theme-brown--light: #f6dddb;
 
+$theme-salmon: #ffb3ba;
+$theme-orange--light: #ffdfba;
+$theme-yellow--light: #ffffba;
+$theme-green--light: #baffc9;
+$theme-blue--light: #bae1ff;
+
 html,
 body {
   font-family: "Source Sans Pro", sans-serif, -apple-system, BlinkMacSystemFont,
@@ -195,4 +201,9 @@ html {
 
 .MuiPaper-root {
   padding: 0.25rem;
+}
+
+.delete-tag-btn {
+  margin: auto;
+  margin-right: 4px;
 }

@@ -23,8 +23,8 @@ export default function AvailableTags(props) {
 
   return (
     <div className="available-tags card glass">
-      <div>
-        <span className="all-tags--title">All tags</span>
+      <div className="all-tags--title">
+        <span className="all-tags--title---span">All tags</span>
       </div>
       <div className="tags-list">
         {Object.entries(tags)?.map?.(([tagLabel, { color }]) => {
@@ -60,6 +60,14 @@ export default function AvailableTags(props) {
         }
         .MuiSvgIcon-root {
           margin: auto 0;
+        }
+
+        .all-tags--title {
+          margin-bottom: 6px;
+        }
+        .all-tags--title---span {
+          font-size: 1rem;
+          padding-left: 2px;
         }
       `}</style>
     </div>
