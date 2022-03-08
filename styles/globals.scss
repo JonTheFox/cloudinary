@@ -205,5 +205,10 @@ html {
 
 .delete-tag-btn {
   margin: auto;
-  margin-right: 4px;
+  margin-right: 0;
+  padding-right: 12px;
+  width: auto;
+  width: 24px;
+  min-width: unset;
+  color: black;
 }

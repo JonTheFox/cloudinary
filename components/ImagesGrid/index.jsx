@@ -95,7 +95,7 @@ function ImagesGrid(props) {
   }, [selectedImage]);
 
   const renderMenu = useCallback(() => {
-    const tagsArray = Object.entries(tags);
+    const tagsArray = Object.entries(tags || []);
     if (!tagsArray?.length) return;
     return (
       <Menu

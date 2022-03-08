@@ -11,15 +11,47 @@ import selectedImageState from "../../store/atoms/selectedImage.js";
 import ImagesGrid from "../ImagesGrid/index.jsx";
 import TageWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import _ from "lodash";
+import { Button } from "@mui/material";
 
 export default function AvailableTags(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const deleteTag = useCallback(() => {
-    debugger;
-  }, []);
+  const deleteTag = useCallback(
+    (deletedTagLabel) => {
+      let newTags;
+      setTags((prevTags) => {
+        const updatedTags = _.cloneDeep(prevTags);
+        delete updatedTags[deletedTagLabel];
+        newTags = updatedTags;
+        return updatedTags;
+      });
+
+      // TODO: remove tag from all each image 'tag' property
+      setImages((prevImages) => {
+        // recoild doesn't allow mutating state properties,
+        // so we make deep clones of them first
+        const imagesClone = _.cloneDeep(prevImages);
+
+        const updatedImages = [];
+
+        imagesClone?.forEach((image, imageIndex) => {
+          const imageTags = image?.tags || [];
+          const filteredTags = imageTags.filter?.((tag) => {
+            // keep the tags that do not have the deleted tag's label
+            return !tag?.includes?.(deletedTagLabel);
+          });
+          updatedImages[imageIndex] = imagesClone[imageIndex];
+          updatedImages[imageIndex].tags = filteredTags;
+        });
+
+        return updatedImages;
+      });
+    },
+    [setTags, setImages]
+  );
 
   return (
     <div className="available-tags card glass">
@@ -27,7 +59,7 @@ export default function AvailableTags(props) {
         <span className="all-tags--title---span">All tags</span>
       </div>
       <div className="tags-list">
-        {Object.entries(tags)?.map?.(([tagLabel, { color }]) => {
+        {Object.entries(tags || [])?.map?.(([tagLabel, { color }]) => {
           return (
             <div
               className="tag-container"
@@ -35,10 +67,12 @@ export default function AvailableTags(props) {
               key={tagLabel}
             >
               <span className="tab-label">{tagLabel || ""}</span>
-              <DeleteOutlinedIcon
+              <Button
                 className="delete-tag-btn"
                 onClick={() => deleteTag(tagLabel)}
-              />
+              >
+                <DeleteOutlinedIcon />
+              </Button>
             </div>
           );
         })}
