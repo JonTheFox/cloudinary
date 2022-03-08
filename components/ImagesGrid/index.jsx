@@ -1,94 +1,144 @@
-import { Component, useState } from "react/cjs/react.development";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react/cjs/react.development";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import TagMenuItem from "../TagMenuItem/index.jsx";
+import _ from "lodash";
 
-import { useRecoilState } from "recoil";
-import { useEffect } from "react/cjs/react.development";
+import { useRecoilState, useRecoilValue } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
+import selectedImageStateIndex from "../../store/atoms/selectedImageIndex.js";
 
 function ImagesGrid(props) {
-  const [tags, setTags] = useRecoilState(tagsState);
+  const tags = useRecoilValue(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
+  const [selectedImageIndex, setSelectedImageIndex] = useRecoilState(
+    selectedImageStateIndex
+  );
+  const statesRefs = useRef({
+    tags,
+    images,
+    selectedImageIndex,
+    selectedImage,
+  });
+
+  useEffect(() => {
+    statesRefs.current.images = images;
+  }, [images]);
+  useEffect(() => {
+    statesRefs.current.selectedImageIndex = selectedImageIndex;
+  }, [selectedImageIndex]);
+  useEffect(() => {
+    statesRefs.current.selectedImage = selectedImage;
+  }, [selectedImage]);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const isMenuOpen = Boolean(anchorEl);
 
   const closeMenu = () => {
     setAnchorEl(null);
   };
 
-  const handleMenuSelect = ({ tag, tagIndex }) => {
-    // tag the photo with the selected tag
-    closeMenu();
-  };
+  const addOrRemoveTag = useCallback(
+    ({ tag, checked }) => {
+      if (!selectedImage) {
+        return null;
+      }
+      const { tagId } = tag;
 
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+      setImages((prevImages) => {
+        const updatedImages = _.cloneDeep(prevImages);
+        const updatedSelectedImage = _.cloneDeep(selectedImage);
+        // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
+        const updatedSelectedImageTags =
+          { ...prevImages[selectedImageIndex].tags } || {};
+        if (checked) {
+          updatedSelectedImageTags[tagId] = tag;
+        } else {
+          delete updatedSelectedImageTags[tagId];
+        }
 
-  const selectImage = (event, { imageIndex }) => {
-    console.log(imageIndex);
+        updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
+        updatedSelectedImageTags[tagId] = checked ? tag : undefined;
+        updatedSelectedImage.tags = updatedSelectedImageTags;
+        updatedImages[selectedImageIndex] = updatedSelectedImage;
 
-    // open the menu
-    setAnchorEl(event.currentTarget);
+        return updatedImages;
+      });
 
+      // const _selectedImageIndex = statesRefs.current.selectedImageIndex;
+      // const _selectedImage = statesRefs.current.selectedImage;
+
+      //clone the images state
+      const updatedImages = [...images];
+      const updatedSelectedImage = { ...selectedImage };
+      const updatedSelectedImageTags = { ...updatedSelectedImage.tags } || {};
+    },
+    [images, setImages, selectedImageIndex, selectedImage]
+  );
+
+  const selectImage = async (event, { imageIndex }) => {
+    const selectedImageEl = event.currentTarget;
     setSelectedImageIndex(imageIndex);
     setSelectedImage(images[imageIndex]);
+    // open the menu on the selected image
+    setAnchorEl(selectedImageEl);
   };
 
-  //on mounted
   useEffect(() => {
-    const MAX_NUM_PICS = 20;
-    fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
-      async (response) => {
-        const pics = await response.json();
-        const mappedPics = pics.map((pic) => {
-          const { download_url: url, id, author } = pic;
-          return { url, id, author };
-        });
-        setImages(mappedPics);
-      }
+    console.log("selectedImage: ", selectedImage);
+  }, [selectedImage]);
+
+  const renderMenu = useCallback(() => {
+    if (!tags?.length) return;
+    return (
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={isMenuOpen}
+        onClose={closeMenu}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        {tags.map((tag = {}) => {
+          const { tagId } = tag;
+          if (!tagId) return null;
+          console.log("selected image:", selectedImage);
+          console.log(
+            "selected image has tagId: ",
+            selectedImage?.tags?.[tagId] === tagId
+          );
+
+          return <TagMenuItem tag={tag} key={tagId} onCheck={addOrRemoveTag} />;
+        })}
+      </Menu>
     );
-  }, []);
+  }, [
+    images,
+    anchorEl?.current,
+    isMenuOpen,
+    closeMenu,
+    selectedImage,
+    addOrRemoveTag,
+  ]);
 
   return (
     <div>
       <section className="images-grid raised--high card shadow--curved glass">
         {images?.map(({ url, id, author }, imageIndex) => {
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
-
           return (
             <>
-              {tags?.length && (
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={closeMenu}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                >
-                  {tags?.map((tag, tagIndex) => {
-                    const { label = "", color = "white", id } = tag;
-                    if (!id) return null;
-
-                    return (
-                      <TagMenuItem
-                        key={id}
-                        label={label}
-                        color={color}
-                        isChecked={false}
-                        onCheck={({ tag, tagIndex }) => handleMenuSelect}
-                      />
-                    );
-                  })}
-                </Menu>
-              )}
               <img
                 key={id}
                 className={`image card ${
@@ -100,6 +150,7 @@ function ImagesGrid(props) {
             </>
           );
         })}
+        {renderMenu()}
       </section>
 
       <style jsx>{`

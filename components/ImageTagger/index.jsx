@@ -16,13 +16,13 @@ export default function Home(props) {
 
   //on mounted
   useEffect(() => {
-    const MAX_NUM_PICS = 20;
+    const MAX_NUM_PICS = 3;
     fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
       async (response) => {
         const pics = await response.json();
         const mappedPics = pics.map((pic) => {
           const { download_url: url, id, author } = pic;
-          return { url, id, author };
+          return { url, id, author, tags: [] };
         });
 
         setImages(mappedPics);

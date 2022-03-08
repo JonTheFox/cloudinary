@@ -12,22 +12,6 @@ export default function Home(props) {
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  //on mounted
-  useEffect(() => {
-    const MAX_NUM_PICS = 20;
-    fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
-      async (response) => {
-        const pics = await response.json();
-        const mappedPics = pics.map((pic) => {
-          const { download_url: url, id, author } = pic;
-          return { url, id, author };
-        });
-
-        setImages(mappedPics);
-      }
-    );
-  }, []);
-
   return (
     <div className="available-tags card glass">
       available tags
