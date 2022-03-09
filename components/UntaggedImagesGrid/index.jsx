@@ -165,19 +165,19 @@ function UntaggedImagesGrid() {
           border-radius: 10px;
         }
 
-        @media screen and (min-width: 1000px) {
-          .image {
-            width: calc(25% - 0.5rem);
-            min-width: calc(25% - 0.5rem);
-            max-width: calc(25% - 0.5rem);
-          }
-        }
-
         @media screen and (min-width: 1600px) {
           .image {
             width: calc(20% - 0.5rem);
             min-width: calc(20% - 0.5rem);
             max-width: calc(20% - 0.5rem);
+          }
+        }
+
+        @media screen and (min-width: 1000px) {
+          .image {
+            width: calc(25% - 0.5rem);
+            min-width: calc(25% - 0.5rem);
+            max-width: calc(25% - 0.5rem);
           }
         }
 

@@ -123,6 +123,38 @@ export default function TaggedImagesGrid(props) {
           border-radius: 6px;
         }
 
+        @media screen and (min-width: 1400px) {
+          .tag--container {
+            width: calc(20% - 0.5rem);
+            min-width: calc(20% - 0.5rem);
+            max-width: calc(20% - 0.5rem);
+          }
+        }
+
+        @media screen and (min-width: 1000px) {
+          .tag--container {
+            width: calc(25% - 0.5rem);
+            min-width: calc(25% - 0.5rem);
+            max-width: calc(25% - 0.5rem);
+          }
+        }
+
+        @media screen and (max-width: 800px) {
+          .tag--container {
+            width: calc(50% - 0.5rem);
+            min-width: calc(50% - 0.5rem);
+            max-width: calc(50% - 0.5rem);
+          }
+        }
+
+        @media screen and (max-width: 600px) {
+          .tag--container {
+            width: calc(100% - 0.5rem);
+            min-width: calc(100% - 0.5rem);
+            max-width: calc(100% - 0.5rem);
+          }
+        }
+
         .tagged-image--container {
           margin-top: 12px;
         }
