@@ -159,9 +159,8 @@ export default function AvailableTags(props) {
 
         .tag-container {
           display: flex;
-
+          border-radius: 6px;
           min-height: 40px;
-
           opacity: 0.85;
           margin: 4px 0;
         }
