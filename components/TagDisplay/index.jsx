@@ -30,7 +30,7 @@ export default function ImagesWithTagsGrid(props) {
               >
                 <span className="tab-label">{tagLabel || ""}</span>
                 <Button
-                  className="delete-tag-btn"
+                  className="delete-btn"
                   onClick={() => deleteTag(tagLabel)}
                 >
                   <DeleteOutlinedIcon />

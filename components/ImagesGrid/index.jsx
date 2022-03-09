@@ -144,11 +144,11 @@ function ImagesGrid(props) {
       <style jsx>{`
         .images-grid {
           grid-area: images-grid;
-          height: 65%;
+          height: 53vh%;
           max-height: 53vh;
+          min-height: 53vh;
           width: 100%;
           min-width: 100%;
-          min-height: 53vh;
           overflow: auto;
         }
 

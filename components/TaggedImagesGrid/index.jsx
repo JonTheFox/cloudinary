@@ -17,41 +17,65 @@ export default function TagsWithAssociatedImages(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [taggedImages, setTaggedImages] = useState({});
 
-  const getTagImages = useCallback((tag) => {
-    if (!tag || _.isEmpty(tag)) return null;
-  }, []);
+  const getImagesByTag = useCallback(({ tag, tagLabel, allImages }) => {
+    if (!tag || !tagLabel || _.isEmpty(tag)) return [];
 
-  useEffect(() => {
-    const filteredImages = images?.filter?.((image) => {
-      return !_.isEmpty(image?.tags);
-    });
-    setTaggedImages(filteredImages);
-  }, [images]);
+    const imagesOfTag = allImages.reduce(
+      (accumulated, image, originalImageIndex) => {
+        const tagInImage = image?.tags?.[tagLabel];
+        // if the image indeed contains the tag,
+        // and we haven't already added this image,
+        // add it
+        if (tagInImage && !accumulated?.[tagLabel]) {
+          accumulated.push({ ...image, originalImageIndex });
+        }
+        return accumulated;
+      },
+      []
+    );
+
+    return imagesOfTag;
+  }, []);
 
   return (
     <div className="tagged-images--container card">
-      {Object.entries(tags || [])?.map?.(
-        ([tagLabel, { url, color, id: imageId }]) => {
-          return (
-            <div
-              className="tag--container"
-              style={{ backgroundColor: color || "" }}
-              key={tagLabel}
-            >
-              <div className="tagged-image--container">
-                <span className="tab-label">{tagLabel || ""}</span>
-                <img className="tagged-image" src={url}></img>
-                <Button
-                  className="delete-tag-btn"
-                  onClick={() => deleteTag(tagLabel)}
-                >
-                  <DeleteOutlinedIcon />
-                </Button>
-              </div>
-            </div>
-          );
-        }
-      )}
+      {Object.entries(tags || [])?.map?.(([tagLabel, tag]) => {
+        if (!tag || !tagLabel) return null;
+        const { color } = tag;
+        return (
+          <div
+            className="tag--container"
+            style={{ backgroundColor: color || "" }}
+            key={tag.key}
+          >
+            <span className="tab-label">{tagLabel || ""}</span>
+            {getImagesByTag({
+              tag,
+              tagLabel,
+              allImages: images,
+            })?.map((imageOfTag, imageIndex, imagesArr) => {
+              const { url, originalImageIndex } = imageOfTag;
+              return (
+                <div className="tagged-image--container">
+                  <div className="tagged-image--first-row">
+                    <span className="tagged-images--image-name">
+                      Image {originalImageIndex}
+                    </span>
+                    <Button className="delete-btn">
+                      <DeleteOutlinedIcon />
+                    </Button>
+                  </div>
+
+                  <img className="tagged-image" src={url} />
+                  {imagesArr.length > imageIndex + 1 && (
+                    <hr className="divider"></hr>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
       <style jsx>{`
         .tagged-images--container {
           margin-top: 12px;
@@ -62,9 +86,29 @@ export default function TagsWithAssociatedImages(props) {
 
         .tag--container {
           width: 25%;
+          overflow: auto;
+          padding: 4px;
         }
 
         .tagged-image--container {
+          margin-top: 12px;
+        }
+
+        .tagged-image {
+          width: 100%;
+          height: auto;
+          border-radius: 12px;
+          padding: 8px;
+        }
+
+        .divider {
+          border-top: 0.25px solid black;
+          border-bottom: none;
+        }
+
+        .tagged-image--first-row {
+          display: flex;
+          flex-direction: row;
         }
       `}</style>
     </div>
