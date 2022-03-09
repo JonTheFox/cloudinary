@@ -110,6 +110,7 @@ export default function TaggedImagesGrid(props) {
           flex-direction: row;
           overflow: auto;
           max-width: 100%;
+          border-radius: 10px;
         }
 
         .tag--container {
