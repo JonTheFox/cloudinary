@@ -14,10 +14,9 @@ function TagMenuItem(props) {
   );
 
   useEffect(() => {
+    // a tag should be checked if it's includes in the 'tags' property of an image
     setChecked(!!selectedImage?.tags?.[props?.tagLabel]);
   }, [selectedImage]);
-
-  const [selectedImageIndex, setSelectedImageIndex] = useState();
 
   const handleCheckboxChange = (event) => {
     const isNowChecked = event.target.checked;
