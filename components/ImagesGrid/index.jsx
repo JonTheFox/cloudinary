@@ -23,20 +23,11 @@ function ImagesGrid(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useRecoilState(
     selectedImageStateIndex
   );
-  const [imagesWithTags, setImagesWithTags] = useState([]);
+  // const [untaggedImages, setUntaggedImages] = useState([]);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const isMenuOpen = Boolean(menuAnchorEl);
 
   const tempImages = useRef([]);
-
-  const getCheckedTagsTuples = useCallback((image) => {
-    if (!image) return null;
-    if (!image.tags) {
-      return [];
-    }
-    return Object.entries(image.tags);
-  }, []);
-  const checkedTags = useRef(getCheckedTagsTuples(selectedImage) || []);
 
   const selectImage = async (event, { imageIndex }) => {
     const selectedImageEl = event.currentTarget;
@@ -63,34 +54,39 @@ function ImagesGrid(props) {
       debugger;
       tempImages.current[selectedImageIndex] = selectedImageClone;
     },
-    [tempImages, setImagesWithTags, selectedImageIndex, selectedImage]
+    [tempImages, selectedImageIndex, selectedImage]
   );
 
   const updateImageTags = useCallback(() => {
     // updare the store regarding the temp tags of the selected image
-    // TODO: bug here
     setImages((prevImages) => {
+      debugger;
       const prevImageClone = _.cloneDeep(prevImages);
-      prevImageClone[selectedImageIndex] = imagesWithTags[selectedImageIndex];
+      prevImageClone[selectedImageIndex] =
+        tempImages?.current?.[selectedImageIndex];
       return prevImageClone;
     });
     setMenuAnchorEl(null);
   }, [selectedImage, tempImages]);
 
-  useEffect(() => {
-    const allImagesClone = _.cloneDeep(images);
-    setImagesWithTags(() => {
-      debugger;
-      const onlyImagesWithoutTags = allImagesClone.filter((image) => {
-        return _.isEmpty(image?.tags ?? {});
-      });
-      debugger;
-      return onlyImagesWithoutTags;
-    });
-  }, [images, setImagesWithTags]);
-  useEffect(() => {
-    tempImages.current = imagesWithTags;
-  }, [imagesWithTags]);
+  // useEffect(() => {
+  //   const allImagesClone = _.cloneDeep(images);
+  //   setUntaggedImages(() => {
+  //     debugger;
+  //     const onlyImagesWithoutTags = allImagesClone.filter(
+  //       (image, imageIndex) => {
+  //         return _.isEmpty(image?.tags ?? {});
+  //       }
+  //     );
+
+  //     // TODO: bug here. Indexes should correspond
+  //     debugger;
+  //     return onlyImagesWithoutTags;
+  //   });
+  // }, [images, setUntaggedImages]);
+  // useEffect(() => {
+  //   tempImages.current = untaggedImages;
+  // }, [untaggedImages]);
 
   const closeMenu = useCallback(() => {
     setMenuAnchorEl(null);
@@ -145,7 +141,13 @@ function ImagesGrid(props) {
   return (
     <div>
       <section className="images-grid raised--high card shadow--curved glass">
-        {Object.values(imagesWithTags)?.map(({ url, id }, imageIndex) => {
+        {Object.values(images)?.map?.((image, imageIndex, _images) => {
+          if (!image) {
+            debugger;
+            return null;
+          }
+          const { url, id, tags } = image;
+          if (!_.isEmpty(tags || {})) return null;
           if (!id) return null;
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
