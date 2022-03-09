@@ -23,104 +23,78 @@ function ImagesGrid(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useRecoilState(
     selectedImageStateIndex
   );
-
   const [imagesWithTags, setImagesWithTags] = useState([]);
-  const statesRefs = useRef({
-    tags,
-    images,
-    selectedImageIndex,
-    selectedImage,
-  });
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const isMenuOpen = Boolean(menuAnchorEl);
 
-  useEffect(() => {
-    statesRefs.current.images = images;
-  }, [images]);
-  useEffect(() => {
-    statesRefs.current.selectedImageIndex = selectedImageIndex;
-  }, [selectedImageIndex]);
-  useEffect(() => {
-    statesRefs.current.selectedImage = selectedImage;
-  }, [selectedImage]);
-  useEffect(() => {
-    const filteredImages = images?.filter((image) => {
-      return _.isEmpty(image?.tags);
-    });
-    statesRefs.current.imagesWithTags = selectedImage;
-    setImagesWithTags(filteredImages);
-  }, [images]);
+  const tempImages = useRef([]);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(anchorEl);
-
-  const closeMenu = useCallback(() => {
-    setAnchorEl(null);
-    updateImageTags();
-  }, [setAnchorEl]);
+  const getCheckedTagsTuples = useCallback((image) => {
+    if (!image) return null;
+    if (!image.tags) {
+      return [];
+    }
+    return Object.entries(image.tags);
+  }, []);
+  const checkedTags = useRef(getCheckedTagsTuples(selectedImage) || []);
 
   const selectImage = async (event, { imageIndex }) => {
     const selectedImageEl = event.currentTarget;
     setSelectedImageIndex(imageIndex);
     setSelectedImage(images[imageIndex]);
     // open the menu on the selected image
-    setAnchorEl(selectedImageEl);
+    setMenuAnchorEl(selectedImageEl);
   };
-
-  const getCheckedTagsTuples = (image) => {
-    if (!image) return null;
-    if (!image.tags) {
-      return [];
-    }
-    return Object.entries(image.tags);
-  };
-
-  const checkedTags = useRef(getCheckedTagsTuples(selectedImage) || []);
 
   const handleTagCheck = useCallback(
     ({ tag, tagLabel, checked }) => {
-      if (!checked) {
-        const tagInArray = checkedTags?.current?.find?.(
-          ({ tagLabel: checkedTagLabel }) => {
-            return checkedTagLabel === tagLabel;
-          }
-        );
+      const selectedImageClone = _.cloneDeep(selectedImage);
 
-        if (!tagInArray) return;
-
-        const indexOfTagToRemove = checkedTags?.current?.indexOf(tagInArray);
-        checkedTags?.current?.splice(
-          indexOfTagToRemove, //TODO: get the index of the tag to remove
-          1
-        );
-        return;
-
-        // return delete checkedTags?.current?.[indexOfTagToRemove]; //ERROR HERE. splice instead
+      if (!selectedImageClone.tags) {
+        selectedImageClone.tags = {};
       }
-      checkedTags.current.push({ tagLabel, tag });
+
+      // add or remove the tag
+      if (checked) {
+        selectedImageClone.tags[tagLabel] = tag;
+      } else {
+        delete selectedImageClone.tags[tagLabel];
+      }
+      debugger;
+      tempImages.current[selectedImageIndex] = selectedImageClone;
     },
-    [checkedTags.current]
+    [tempImages, setImagesWithTags, selectedImageIndex, selectedImage]
   );
 
   const updateImageTags = useCallback(() => {
-    setImages((prevImages = []) => {
-      // recoil doesn't allow mutating state properties,
-      // so we make deep clones of them first
-      const imagesClone = _.cloneDeep(prevImages);
-      const selectedImageClone = _.cloneDeep(selectedImage || {});
-      checkedTags.current?.forEach(({ tagLabel, tag }) => {
-        selectedImageClone.tags[tagLabel] = tag;
-      });
-
-      imagesClone[selectedImageIndex].tags = selectedImageClone.tags;
-
-      return imagesClone;
+    // updare the store regarding the temp tags of the selected image
+    // TODO: bug here
+    setImages((prevImages) => {
+      const prevImageClone = _.cloneDeep(prevImages);
+      prevImageClone[selectedImageIndex] = imagesWithTags[selectedImageIndex];
+      return prevImageClone;
     });
-
-    setAnchorEl(null);
-  }, [checkedTags.current, selectedImage]);
+    setMenuAnchorEl(null);
+  }, [selectedImage, tempImages]);
 
   useEffect(() => {
-    console.log("selectedImage: ", selectedImage);
-  }, [selectedImage]);
+    const allImagesClone = _.cloneDeep(images);
+    setImagesWithTags(() => {
+      debugger;
+      const onlyImagesWithoutTags = allImagesClone.filter((image) => {
+        return _.isEmpty(image?.tags ?? {});
+      });
+      debugger;
+      return onlyImagesWithoutTags;
+    });
+  }, [images, setImagesWithTags]);
+  useEffect(() => {
+    tempImages.current = imagesWithTags;
+  }, [imagesWithTags]);
+
+  const closeMenu = useCallback(() => {
+    setMenuAnchorEl(null);
+  }, [setMenuAnchorEl, setMenuAnchorEl, updateImageTags]);
 
   const renderMenu = useCallback(() => {
     const tagsArray = Object.entries(tags || []);
@@ -129,7 +103,7 @@ function ImagesGrid(props) {
     return (
       <Menu
         id="basic-menu"
-        anchorEl={anchorEl}
+        anchorEl={menuAnchorEl}
         open={isMenuOpen}
         onClose={closeMenu}
         anchorOrigin={{
@@ -137,8 +111,7 @@ function ImagesGrid(props) {
           horizontal: "left",
         }}
       >
-        {tagsArray?.map(([tagLabel, tag]) => {
-          console.log("tagLabel: ", tagLabel);
+        {tagsArray?.map?.(([tagLabel, tag]) => {
           const { tagId } = tag;
           if (!tagId) return null;
           return (
@@ -161,7 +134,7 @@ function ImagesGrid(props) {
     );
   }, [
     images,
-    anchorEl?.current,
+    menuAnchorEl?.current,
     isMenuOpen,
     closeMenu,
     selectedImage,
@@ -172,7 +145,8 @@ function ImagesGrid(props) {
   return (
     <div>
       <section className="images-grid raised--high card shadow--curved glass">
-        {imagesWithTags?.map(({ url, id }, imageIndex) => {
+        {Object.values(imagesWithTags)?.map(({ url, id }, imageIndex) => {
+          if (!id) return null;
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
           return (

@@ -67,7 +67,7 @@ export default function Home(props) {
           grid-area: main-area;
           position: relative;
           height: 100%;
-          width: 100%;
+          width: calc(100vh - 254px);
         }
 
         .images-grid {

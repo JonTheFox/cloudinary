@@ -9,7 +9,7 @@ import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import _ from "lodash";
 
-export default function TageWithAssociatedImages(props) {
+export default function TagsWithAssociatedImages(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -25,7 +25,7 @@ export default function TageWithAssociatedImages(props) {
   return (
     <div className="tags-with-associated-images card">
       {Object.entries(tags || {})?.map?.(([tagLabel, tag]) => {
-        return <span>{tagLabel}</span>;
+        return <span key={tagLabel}>{tagLabel}</span>;
       })}
       <style jsx>{`
         .tags-with-associated-images {
