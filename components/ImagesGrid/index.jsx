@@ -14,14 +14,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
-import selectedImageStateIndex from "../../store/atoms/selectedImageIndex.js";
+import selectedImageIndexState from "../../store/atoms/selectedImageIndex.js";
 
 function ImagesGrid(props) {
   const tags = useRecoilValue(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
   const [selectedImageIndex, setSelectedImageIndex] = useRecoilState(
-    selectedImageStateIndex
+    selectedImageIndexState
   );
   // const [untaggedImages, setUntaggedImages] = useState([]);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -33,6 +33,11 @@ function ImagesGrid(props) {
     const selectedImageEl = event.currentTarget;
     setSelectedImageIndex(imageIndex);
     setSelectedImage(images[imageIndex]);
+
+    // set the temporary tags state to the value of the selected image's tags
+    // so that we stay in sync
+    tempImages.current[imageIndex] = images[imageIndex];
+    debugger;
     // open the menu on the selected image
     setMenuAnchorEl(selectedImageEl);
   };
@@ -40,12 +45,11 @@ function ImagesGrid(props) {
   const handleTagCheck = useCallback(
     ({ tag, tagLabel, checked }) => {
       const selectedImageClone = _.cloneDeep(selectedImage);
+      // copy the the temporary tags to the cloned item from the store
+      selectedImageClone.tags = tempImages.current[selectedImageIndex]?.tags;
 
-      if (!selectedImageClone.tags) {
-        selectedImageClone.tags = {};
-      }
-
-      // add or remove the tag
+      debugger;
+      // add or remove the specific tag that has just been changed
       if (checked) {
         selectedImageClone.tags[tagLabel] = tag;
       } else {
@@ -57,12 +61,13 @@ function ImagesGrid(props) {
   );
 
   const updateImageTags = useCallback(() => {
-    // set the value of the globasl state to the updared to the store
+    // set the value of the global state to the the temp values
     setImages((prevImages) => {
+      // TODO: fix BUG: this only updates 1 tag!
       const prevImageClone = _.cloneDeep(prevImages);
+      debugger;
       prevImageClone[selectedImageIndex] =
         tempImages?.current?.[selectedImageIndex];
-      debugger;
       return prevImageClone;
     });
     setMenuAnchorEl(null);
@@ -119,35 +124,33 @@ function ImagesGrid(props) {
   ]);
 
   return (
-    <div>
-      <section className="images-grid raised--high card shadow--curved glass">
-        {Object.values(images)?.map?.((image, imageIndex, _images) => {
-          if (!image) {
-            return null;
-          }
-          const { url, id, tags } = image;
-          if (!_.isEmpty(tags || {})) return null;
-          if (!id) return null;
-          const isSelectedImageIndex = selectedImageIndex === imageIndex;
+    <section className="images-grid raised--high card shadow--curved glass">
+      {Object.values(images)?.map?.((image, imageIndex, _images) => {
+        if (!image) {
+          return null;
+        }
+        const { url, id, tags } = image;
+        if (!_.isEmpty(tags || {})) return null;
+        if (!id) return null;
+        const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
-          return (
-            <img
-              key={id}
-              className={`image card ${isSelectedImageIndex && "is-selected"}`}
-              onClick={(event) => selectImage(event, { imageIndex })}
-              src={url}
-            />
-          );
-        })}
-        {renderMenu()}
-      </section>
+        return (
+          <img
+            key={id}
+            className={`image card ${isSelectedImageIndex && "is-selected"}`}
+            onClick={(event) => selectImage(event, { imageIndex })}
+            src={url}
+          />
+        );
+      })}
+      {renderMenu()}
 
       <style jsx>{`
         .images-grid {
           grid-area: images-grid;
-          height: 53vh%;
-          max-height: 53vh;
-          min-height: 53vh;
+          height: 53%;
+          max-height: 53%;
+          min-height: 53%;
           width: 100%;
           min-width: 100%;
           overflow: auto;
@@ -211,7 +214,7 @@ function ImagesGrid(props) {
           opacity: 0.5;
         }
       `}</style>
-    </div>
+    </section>
   );
 }
 

@@ -79,13 +79,17 @@ export default function TagsWithAssociatedImages(props) {
       <style jsx>{`
         .tagged-images--container {
           margin-top: 12px;
-          height: calc(35.5% - 12px);
+          height: calc(47% - 32px);
           display: flex;
           flex-direction: row;
+          overflow: auto;
+          max-width: 100%;
         }
 
         .tag--container {
           width: 25%;
+          max-width: 25%;
+          min-width: 25%;
           overflow: auto;
           padding: 4px;
         }

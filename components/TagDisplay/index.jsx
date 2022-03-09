@@ -48,6 +48,7 @@ export default function ImagesWithTagsGrid(props) {
           .tag-container {
             display: flex;
             height: 40px;
+            min-width: 25%;
           }
 
           .tab-label {
