@@ -31,6 +31,9 @@ export default function TagCreator(props) {
         tagId: Date.now(),
       };
 
+      // clear the tag label input
+      setTagLabel("");
+
       return updatedTags;
 
       // const updatedSelectedImage = _.cloneDeep(selectedImage);

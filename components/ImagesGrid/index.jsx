@@ -57,15 +57,16 @@ function ImagesGrid(props) {
   );
 
   const updateImageTags = useCallback(() => {
-    // updare the store regarding the temp tags of the selected image
+    // set the value of the globasl state to the updared to the store
     setImages((prevImages) => {
       const prevImageClone = _.cloneDeep(prevImages);
       prevImageClone[selectedImageIndex] =
         tempImages?.current?.[selectedImageIndex];
+      debugger;
       return prevImageClone;
     });
     setMenuAnchorEl(null);
-  }, [selectedImage, tempImages]);
+  }, [selectedImage, tempImages, selectedImageIndex]);
 
   const closeMenu = useCallback(() => {
     setMenuAnchorEl(null);
