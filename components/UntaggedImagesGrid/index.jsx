@@ -9,7 +9,7 @@ import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
 import selectedImageIndexState from "../../store/atoms/selectedImageIndex.js";
 
-function ImagesGrid() {
+function UntaggedImagesGrid() {
   const tags = useRecoilValue(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
@@ -216,4 +216,4 @@ function ImagesGrid() {
   );
 }
 
-export default ImagesGrid;
+export default UntaggedImagesGrid;

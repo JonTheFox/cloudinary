@@ -14,7 +14,7 @@ function TagMenuItem(props) {
   );
 
   useEffect(() => {
-    // a tag should be checked if it's includes in the 'tags' property of an image
+    // a tag should be checked if it's included in the 'tags' property of an image
     setChecked(!!selectedImage?.tags?.[props?.tagLabel]);
   }, [selectedImage]);
 

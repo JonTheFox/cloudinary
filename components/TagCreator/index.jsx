@@ -3,8 +3,6 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react/cjs/react.development";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
-import selectedImageState from "../../store/atoms/selectedImage.js";
-import ImagesGrid from "../ImagesGrid/index.jsx";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ColorPicker from "../ColorPicker/index.jsx";
@@ -15,15 +13,14 @@ export default function TagCreator(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [tagLabel, setTagLabel] = useState("");
-  const [isTagValid, setIsTagValid] = useState(false); // todo: change the initial value
+  const [isTagValid, setIsTagValid] = useState(false); // because we start with "" as the initial value for tagLabel
 
   const saveTag = useCallback(() => {
     if (!isTagValid) return;
-    // TODO: add the tag to the global state
+
     setTags((prevTags) => {
       // recoil doesn't allow mutating state properties,
       // so we make deep clones of them first
-
       const updatedTags = _.cloneDeep(prevTags);
       updatedTags[tagLabel] = {
         label: tagLabel,
@@ -51,10 +48,6 @@ export default function TagCreator(props) {
     const isLabelUnique = !Object.keys(tags).includes?.(tagLabel);
     setIsTagValid(isLabelUnique);
   }, [tagLabel, tagColor, tags]);
-
-  useEffect(() => {
-    console.log("tags: ", tags);
-  }, [tags]);
 
   const handleColorSelect = useCallback(
     (newColor) => {

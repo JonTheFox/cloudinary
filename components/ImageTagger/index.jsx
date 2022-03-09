@@ -2,7 +2,7 @@ import { useState, useEffect } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
-import ImagesGrid from "../ImagesGrid/index.jsx";
+import UntaggedImagesGrid from "../UntaggedImagesGrid/index.jsx";
 import TaggedImagesGrid from "../TaggedImagesGrid/index.jsx";
 import TagCreator from "../TagCreator/index.jsx";
 import AvailableTags from "../AvailableTags/index.jsx";
@@ -77,7 +77,7 @@ export default function Home(props) {
           <AvailableTags />
         </aside>
         <main className="main-area">
-          <ImagesGrid />
+          <UntaggedImagesGrid />
           <TaggedImagesGrid />
         </main>
       </div>
