@@ -10,25 +10,21 @@ function ColorPicker(props) {
   const openBtnRef = useRef(null);
   const [color, setColor] = useState("#aabbcc");
 
-  const handleClick = useCallback(
-    (event) => {
-      setAnchorEl(openBtnRef.current);
-    },
-    [setAnchorEl, openBtnRef]
-  );
-
-  const handleColorSet = useCallback(() => {
-    console.log("selected color:", color);
-    props.onSelect && props.onSelect(color);
-    handleClose();
-  }, [color]);
+  const handleClick = useCallback(() => {
+    setAnchorEl(openBtnRef.current);
+  }, [setAnchorEl, openBtnRef]);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleColorSet = useCallback(() => {
+    props.onSelect && props.onSelect(color);
+    handleClose();
+  }, [color]);
+
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const id = open ? "color-picker-popover" : undefined;
 
   return (
     <div id="weiss-color-picker">

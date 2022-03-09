@@ -2,7 +2,6 @@ import { useState, useEffect } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
-import selectedImageState from "../../store/atoms/selectedImage.js";
 import ImagesGrid from "../ImagesGrid/index.jsx";
 import TaggedImagesGrid from "../TaggedImagesGrid/index.jsx";
 import TagCreator from "../TagCreator/index.jsx";

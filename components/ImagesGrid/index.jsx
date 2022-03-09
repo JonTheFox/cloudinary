@@ -1,22 +1,15 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react/cjs/react.development";
-import PropTypes from "prop-types";
+import { useState, useRef, useCallback } from "react/cjs/react.development";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import TagMenuItem from "../TagMenuItem/index.jsx";
 import _ from "lodash";
-
 import { useRecoilState, useRecoilValue } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
 import selectedImageIndexState from "../../store/atoms/selectedImageIndex.js";
 
-function ImagesGrid(props) {
+function ImagesGrid() {
   const tags = useRecoilValue(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImage, setSelectedImage] = useRecoilState(selectedImageState);
@@ -104,7 +97,7 @@ function ImagesGrid(props) {
           );
         })}
         <Button className="apply-tags-btn" onClick={updateImageTags}>
-          Apply
+          Assign
         </Button>
       </Menu>
     );
