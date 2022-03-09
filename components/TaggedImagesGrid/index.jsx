@@ -17,6 +17,10 @@ export default function TagsWithAssociatedImages(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [taggedImages, setTaggedImages] = useState({});
 
+  const getTagImages = useCallback((tag) => {
+    if (!tag || _.isEmpty(tag)) return null;
+  }, []);
+
   useEffect(() => {
     const filteredImages = images?.filter?.((image) => {
       return !_.isEmpty(image?.tags);
@@ -26,29 +30,32 @@ export default function TagsWithAssociatedImages(props) {
 
   return (
     <div className="tagged-images--container card">
-      {Object.entries(tags || [])?.map?.(([tagLabel, { color }]) => {
-        return (
-          <div
-            className="tag--container"
-            style={{ backgroundColor: color || "" }}
-            key={tagLabel}
-          >
-            <div className="tagged-image--container">
-              <span className="tab-label">{tagLabel || ""}</span>
-              <Button
-                className="delete-tag-btn"
-                onClick={() => deleteTag(tagLabel)}
-              >
-                <DeleteOutlinedIcon />
-              </Button>
+      {Object.entries(tags || [])?.map?.(
+        ([tagLabel, { url, color, id: imageId }]) => {
+          return (
+            <div
+              className="tag--container"
+              style={{ backgroundColor: color || "" }}
+              key={tagLabel}
+            >
+              <div className="tagged-image--container">
+                <span className="tab-label">{tagLabel || ""}</span>
+                <img className="tagged-image" src={url}></img>
+                <Button
+                  className="delete-tag-btn"
+                  onClick={() => deleteTag(tagLabel)}
+                >
+                  <DeleteOutlinedIcon />
+                </Button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        }
+      )}
       <style jsx>{`
         .tagged-images--container {
           margin-top: 12px;
-          height: calc(35% - 12px);
+          height: calc(35.5% - 12px);
           display: flex;
           flex-direction: row;
         }
