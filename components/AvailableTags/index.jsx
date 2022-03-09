@@ -20,31 +20,42 @@ export default function AvailableTags(props) {
     (tagLabelToDelete) => {
       let newTags;
       setTags((prevTags) => {
-        const updatedTags = _.cloneDeep(prevTags);
-        delete updatedTags[tagLabelToDelete];
-        newTags = updatedTags;
-        return updatedTags;
+        const tagsClone = _.cloneDeep(prevTags);
+        delete tagsClone[tagLabelToDelete];
+        newTags = tagsClone;
+        return tagsClone;
       });
 
-      // TODO: for each image, remove the tag from its 'tags' property
+      debugger;
+
+      // for each image, remove the tag from its 'tags' property
       setImages((prevImages) => {
-        // recoild doesn't allow mutating state properties,
+        // recoil doesn't allow mutating state properties,
         // so we make deep clones of them first
         const imagesClone = _.cloneDeep(prevImages);
 
         const updatedImages = [];
 
+        // for each image,
+
         imagesClone?.forEach((image, imageIndex) => {
-          const imageTags = image?.tags || [];
-          const filteredTags = imageTags.filter?.((tag) => {
-            // keep the tags that do not have the deleted tag's label
-            return !tag?.includes?.(tagLabelToDelete);
-          });
+          // get its current tags
+          const imageTags = image?.tags || {};
+          // filter out the tag that is to be deleted
+
+          const filteredTags = Object.entries(imageTags)?.filter?.(
+            ([tagLabel, tag]) => {
+              // keep the tags that do not have the deleted tag's label
+              debugger;
+              return tagLabel !== tagLabelToDelete;
+            }
+          );
 
           updatedImages[imageIndex] = imagesClone[imageIndex];
           updatedImages[imageIndex].tags = filteredTags;
         });
 
+        debugger;
         return updatedImages;
       });
     },
@@ -86,6 +97,8 @@ export default function AvailableTags(props) {
         .tag-container {
           display: flex;
           height: 40px;
+
+          margin: 4px 0;
         }
 
         .tab-label {
