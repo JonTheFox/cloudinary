@@ -123,6 +123,7 @@ export default function TaggedImagesGrid(props) {
           overflow: auto;
           padding: 4px;
           margin: 4px;
+          border-radius: 6px;
         }
 
         .tagged-image--container {
