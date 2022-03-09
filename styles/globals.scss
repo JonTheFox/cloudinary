@@ -221,22 +221,35 @@ a {
   padding: 0.25rem;
 }
 
-.delete-btn {
+.delete-btn,
+.edit-btn {
   margin: auto;
+  margin-left: 0;
   margin-right: 0;
   margin-right: 12px;
-  padding: 0px;
+  padding: 0;
   width: 18px;
   min-width: unset;
-  color: black;
+
+  svg {
+    color: black;
+  }
+}
+
+.edit-btn {
+  margin-right: 8px;
 }
 
 .tag-container {
-  .delete-btn {
+  .delete-btn,
+  .edit-btn {
     opacity: 0;
   }
-  &:hover .delete-btn {
-    opacity: 1;
+  &:hover {
+    .delete-btn,
+    .edit-btn {
+      opacity: 1;
+    }
   }
 }
 
