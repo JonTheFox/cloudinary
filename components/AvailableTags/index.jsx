@@ -34,28 +34,26 @@ export default function AvailableTags(props) {
         // so we make deep clones of them first
         const imagesClone = _.cloneDeep(prevImages);
 
-        const updatedImages = [];
+        // since we are going to iterate over imagesClone AND mutate the object,
+        // we define a new variable, so that we don't mess up the loop while it's going
+        const updatedImages = imagesClone; //
 
         // for each image,
-
         imagesClone?.forEach((image, imageIndex) => {
           // get its current tags
           const imageTags = image?.tags || {};
+
           // filter out the tag that is to be deleted
-
-          const filteredTags = Object.entries(imageTags)?.filter?.(
-            ([tagLabel, tag]) => {
-              // keep the tags that do not have the deleted tag's label
-              debugger;
-              return tagLabel !== tagLabelToDelete;
+          // by assigning all the other tags to the updatedImages object
+          const filteredTagsObject = {};
+          Object.entries(imageTags)?.filter?.(([tagLabel, tag]) => {
+            // keep the tags that do not have the deleted tag's label
+            if (tagLabel !== tagLabelToDelete) {
+              _.set(updatedImages, `[${imageIndex}].tags[${tagLabel}]`, tag);
             }
-          );
-
-          updatedImages[imageIndex] = imagesClone[imageIndex];
-          updatedImages[imageIndex].tags = filteredTags;
+            return;
+          });
         });
-
-        debugger;
         return updatedImages;
       });
     },
