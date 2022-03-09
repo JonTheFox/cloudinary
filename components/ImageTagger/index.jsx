@@ -17,7 +17,7 @@ export default function Home(props) {
 
   //on mounted
   useEffect(() => {
-    const MAX_NUM_PICS = 3;
+    const MAX_NUM_PICS = 20;
     fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
       async (response) => {
         const pics = await response.json();
@@ -68,6 +68,7 @@ export default function Home(props) {
           grid-area: main-area;
           position: relative;
           height: calc(100% - 32px);
+          max-height: 79.35vh;
           width: calc(100vw - 254px);
         }
 
@@ -85,6 +86,7 @@ export default function Home(props) {
           display: grid;
           gap: 12px;
           padding: 20px;
+          padding-bottom: 0;
           grid-template-areas:
             "header header header header "
             "sidebar sidebar main-area main-area  "

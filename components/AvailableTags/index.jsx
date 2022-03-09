@@ -26,8 +26,6 @@ export default function AvailableTags(props) {
         return tagsClone;
       });
 
-      debugger;
-
       // for each image, remove the tag from its 'tags' property
       setImages((prevImages) => {
         // recoil doesn't allow mutating state properties,
