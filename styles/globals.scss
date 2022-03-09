@@ -125,39 +125,28 @@ html {
 
 .title-2 {
   font-family: "Mr Dafoe";
+  position: absolute;
+  top: 46px;
+  left: 4rem;
   margin: 0;
   font-size: 2.5rem;
-  top: -76px;
   padding-left: 8px;
   color: white;
   text-shadow: 0 0 0.05em #fff, 0 0 0.2em $theme-purple--light,
     0 0 0.3em $theme-purple--light;
   transform: rotate(-7deg);
   bottom: 52px;
-  position: relative;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 800px) {
   .title-2 {
-    top: -40px;
-  }
-}
-
-@media screen and (max-width: 840px) {
-  .title-2 {
-    top: -40px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .title-2 {
-    top: -30px;
+    font-size: 2.25rem;
   }
 }
 
 @media screen and (max-width: 450px) {
   .title-2 {
-    top: -20px;
+    font-size: 2rem;
   }
 }
 

@@ -18,40 +18,6 @@ export default function AvailableTags(props) {
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const deleteTag = useCallback(
-    (deletedTagLabel) => {
-      let newTags;
-      setTags((prevTags) => {
-        const updatedTags = _.cloneDeep(prevTags);
-        delete updatedTags[deletedTagLabel];
-        newTags = updatedTags;
-        return updatedTags;
-      });
-
-      // TODO: remove tag from all each image 'tag' property
-      setImages((prevImages) => {
-        // recoild doesn't allow mutating state properties,
-        // so we make deep clones of them first
-        const imagesClone = _.cloneDeep(prevImages);
-
-        const updatedImages = [];
-
-        imagesClone?.forEach((image, imageIndex) => {
-          const imageTags = image?.tags || [];
-          const filteredTags = imageTags.filter?.((tag) => {
-            // keep the tags that do not have the deleted tag's label
-            return !tag?.includes?.(deletedTagLabel);
-          });
-          updatedImages[imageIndex] = imagesClone[imageIndex];
-          updatedImages[imageIndex].tags = filteredTags;
-        });
-
-        return updatedImages;
-      });
-    },
-    [setTags, setImages]
-  );
-
   return (
     <div className="available-tags card glass">
       <div className="all-tags--title">

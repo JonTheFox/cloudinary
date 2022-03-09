@@ -7,6 +7,8 @@ import {
 import { useRecoilState } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
+import Button from "@mui/material/Button";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import _ from "lodash";
 
 export default function TagsWithAssociatedImages(props) {
@@ -23,14 +25,39 @@ export default function TagsWithAssociatedImages(props) {
   }, [images]);
 
   return (
-    <div className="tags-with-associated-images card">
-      {Object.entries(tags || {})?.map?.(([tagLabel, tag]) => {
-        return <span key={tagLabel}>{tagLabel}</span>;
+    <div className="tagged-images--container card">
+      {Object.entries(tags || [])?.map?.(([tagLabel, { color }]) => {
+        return (
+          <div
+            className="tag--container"
+            style={{ backgroundColor: color || "" }}
+            key={tagLabel}
+          >
+            <div className="tagged-image--container">
+              <span className="tab-label">{tagLabel || ""}</span>
+              <Button
+                className="delete-tag-btn"
+                onClick={() => deleteTag(tagLabel)}
+              >
+                <DeleteOutlinedIcon />
+              </Button>
+            </div>
+          </div>
+        );
       })}
       <style jsx>{`
-        .tags-with-associated-images {
+        .tagged-images--container {
           margin-top: 12px;
           height: calc(35% - 12px);
+          display: flex;
+          flex-direction: row;
+        }
+
+        .tag--container {
+          width: 25%;
+        }
+
+        .tagged-image--container {
         }
       `}</style>
     </div>
