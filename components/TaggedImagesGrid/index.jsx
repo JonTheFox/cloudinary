@@ -41,8 +41,9 @@ export default function TaggedImagesGrid(props) {
           `[${originalImageIndex}].tags[${tagLabel}]`,
           undefined
         );
+        debugger;
         // now that we have the path to the property, we can safely delete it entirely
-        // so that the property doesn't get picked up by _.isEmpty() as an actualy property with a value
+        // so that the property doesn't get picked up by _.isEmpty() as an actual property with a value
         delete imagesClone[originalImageIndex].tags[tagLabel];
         return imagesClone;
       });
