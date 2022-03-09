@@ -5,7 +5,6 @@ import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
 import ImagesGrid from "../ImagesGrid/index.jsx";
-import TageWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ColorPicker from "../ColorPicker/index.jsx";

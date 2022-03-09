@@ -5,7 +5,7 @@ import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
 import ImagesGrid from "../ImagesGrid/index.jsx";
-import TagsWithAssociatedImages from "../TagsWithAssociatedImages/index.jsx";
+import TaggedImagesGrid from "../TaggedImagesGrid/index.jsx";
 import TagCreator from "../TagCreator/index.jsx";
 import AvailableTags from "../AvailableTags/index.jsx";
 
@@ -48,7 +48,7 @@ export default function Home(props) {
         </aside>
         <main className="main-area">
           <ImagesGrid />
-          <TagsWithAssociatedImages />
+          <TaggedImagesGrid />
         </main>
       </div>
 
