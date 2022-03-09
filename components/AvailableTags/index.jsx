@@ -78,7 +78,7 @@ export default function AvailableTags(props) {
 
         // since we are going to iterate over imagesClone AND mutate the object,
         // we define a new variable, so that we don't mess up the loop while it's going
-        const updatedImages = imagesClone; //
+        const updatedImages = [...imagesClone];
 
         // for each image,
         imagesClone?.forEach((image, imageIndex) => {
@@ -87,7 +87,6 @@ export default function AvailableTags(props) {
 
           // filter out the tag that is to be deleted
           // by assigning all the other tags to the updatedImages object
-          const filteredTagsObject = {};
           Object.entries(imageTags)?.filter?.(([tagLabel, tag]) => {
             // keep the tags that do not have the deleted tag's label
             if (tagLabel !== tagLabelToDelete) {
