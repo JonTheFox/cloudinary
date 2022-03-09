@@ -16,12 +16,11 @@ import { Button } from "@mui/material";
 export default function AvailableTags(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [editingLabelIndex, setEditingLabelIndex] = useState(null);
   const [editingLabelText, setEditingLabelText] = useState("");
 
   const saveEditedLabel = useCallback(
-    ({ tagLabel: prevTagLabel = "", tagIndex }) => {
+    (prevTagLabel) => {
       if (!editingLabelText) {
         // leave without saving
         return setEditingLabelIndex(null);
@@ -46,7 +45,7 @@ export default function AvailableTags(props) {
   );
 
   const handleEditBtnClick = useCallback(
-    ({ tagLabel = "", tagIndex }) => {
+    (tagIndex) => {
       setEditingLabelIndex(tagIndex);
     },
     [setEditingLabelIndex]
@@ -133,13 +132,9 @@ export default function AvailableTags(props) {
                 </span>
                 <Button className="edit-btn">
                   {isLabelEditable ? (
-                    <CheckIcon
-                      onClick={() => saveEditedLabel({ tagLabel, tagIndex })}
-                    />
+                    <CheckIcon onClick={() => saveEditedLabel(tagLabel)} />
                   ) : (
-                    <EditIcon
-                      onClick={() => handleEditBtnClick({ tagLabel, tagIndex })}
-                    />
+                    <EditIcon onClick={() => handleEditBtnClick(tagIndex)} />
                   )}
                 </Button>
                 <Button
