@@ -160,8 +160,8 @@ export default function TaggedImagesGrid(props) {
         }
 
         .tagged-image {
-          height: 64px;
-          border-radius: 4px;
+          height: 128px;
+          border-radius: 6px;
           padding: 0;
         }
 
@@ -173,6 +173,10 @@ export default function TaggedImagesGrid(props) {
         .tagged-image--first-row {
           display: flex;
           flex-direction: row;
+        }
+
+        .tagged-images--image-name {
+          padding-right: 8px;
         }
       `}</style>
     </div>
