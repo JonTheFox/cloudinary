@@ -56,17 +56,18 @@ export default function Home(props) {
         .header {
           grid-area: header;
           margin: 0;
-          height: 30px;
+          height: 98px;
         }
         .sidebar {
           grid-area: sidebar;
           width: 200px;
+          height: calc(100% - 32px);
         }
 
         .main-area {
           grid-area: main-area;
           position: relative;
-          height: 100%;
+          height: calc(100% - 32px);
           width: calc(100vw - 254px);
         }
 

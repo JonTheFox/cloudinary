@@ -79,8 +79,9 @@ export default function AvailableTags(props) {
         .available-tags {
           grid-area: available-tags;
           margin-top: 16px;
-
-          height: calc(100vh - 270px - 32px);
+          height: 532px;
+          max-height: 532px;
+          overflow: auto;
         }
         .tag-container {
           display: flex;

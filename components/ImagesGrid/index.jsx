@@ -37,7 +37,6 @@ function ImagesGrid(props) {
     // set the temporary tags state to the value of the selected image's tags
     // so that we stay in sync
     tempImages.current[imageIndex] = images[imageIndex];
-    debugger;
     // open the menu on the selected image
     setMenuAnchorEl(selectedImageEl);
   };
@@ -50,7 +49,6 @@ function ImagesGrid(props) {
         tempImages.current[selectedImageIndex]?.tags
       );
 
-      debugger;
       // add or remove the specific tag that has just been changed
       if (checked) {
         selectedImageClone.tags[tagLabel] = tag;
@@ -67,7 +65,6 @@ function ImagesGrid(props) {
     setImages((prevImages) => {
       // TODO: fix BUG: this only updates 1 tag!
       const prevImageClone = _.cloneDeep(prevImages);
-      debugger;
       prevImageClone[selectedImageIndex] =
         tempImages?.current?.[selectedImageIndex];
       return prevImageClone;

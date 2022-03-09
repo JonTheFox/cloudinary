@@ -90,11 +90,12 @@ export default function TagsWithAssociatedImages(props) {
         }
 
         .tag--container {
-          width: 25%;
-          max-width: 25%;
-          min-width: 25%;
+          width: calc(25% - 8px);
+          max-width: calc(25% - 8px);
+          min-width: calc(25% - 8px);
           overflow: auto;
           padding: 4px;
+          margin: 4px;
         }
 
         .tagged-image--container {
@@ -102,10 +103,9 @@ export default function TagsWithAssociatedImages(props) {
         }
 
         .tagged-image {
-          width: 100%;
-          height: auto;
-          border-radius: 12px;
-          padding: 8px;
+          height: 64px;
+          border-radius: 4px;
+          padding: 0;
         }
 
         .divider {
