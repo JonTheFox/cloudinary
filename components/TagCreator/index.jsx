@@ -108,12 +108,7 @@ export default function TagCreator(props) {
         </label>
       </div>
 
-      <Button
-        id="save-tag--btn"
-        variant="outlined"
-        onClick={saveTag}
-        disabled={!isTagValid}
-      >
+      <Button id="save-tag--btn" onClick={saveTag} disabled={!isTagValid}>
         Save Tag
       </Button>
 
@@ -141,6 +136,7 @@ export default function TagCreator(props) {
         .tag--color-hex {
           height: auto;
           margin: auto;
+          margin-left: 8px;
         }
 
         .tag-invalid-msg {

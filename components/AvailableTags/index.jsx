@@ -112,9 +112,6 @@ export default function AvailableTags(props) {
           font-size: 1rem;
           padding-left: 2px;
         }
-        .delete-btn {
-          transform: scale(2);
-        }
       `}</style>
     </div>
   );
