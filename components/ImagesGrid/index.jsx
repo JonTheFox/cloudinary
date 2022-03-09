@@ -23,6 +23,8 @@ function ImagesGrid(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useRecoilState(
     selectedImageStateIndex
   );
+
+  const [imagesWithTags, setImagesWithTags] = useState([]);
   const statesRefs = useRef({
     tags,
     images,
@@ -39,6 +41,13 @@ function ImagesGrid(props) {
   useEffect(() => {
     statesRefs.current.selectedImage = selectedImage;
   }, [selectedImage]);
+  useEffect(() => {
+    const filteredImages = images?.filter((image) => {
+      return _.isEmpty(image?.tags);
+    });
+    statesRefs.current.imagesWithTags = selectedImage;
+    setImagesWithTags(filteredImages);
+  }, [images]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -163,7 +172,7 @@ function ImagesGrid(props) {
   return (
     <div>
       <section className="images-grid raised--high card shadow--curved glass">
-        {images?.map(({ url, id }, imageIndex) => {
+        {imagesWithTags?.map(({ url, id }, imageIndex) => {
           const isSelectedImageIndex = selectedImageIndex === imageIndex;
 
           return (
