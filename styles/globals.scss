@@ -9,7 +9,6 @@
 $theme-purple--light: #d1c2ed;
 $theme-purple--dark: #7600bf;
 $theme-brown--light: #f6dddb;
-
 $theme-salmon: #ffb3ba;
 $theme-orange--light: #ffdfba;
 $theme-yellow--light: #ffffba;
@@ -54,12 +53,12 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $theme-orange--light;
+  background: $theme-purple--light;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: $theme-yellow--light;
+  background: $theme-purple--dark;
 }
 
 //

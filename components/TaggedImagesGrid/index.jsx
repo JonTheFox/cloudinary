@@ -57,9 +57,6 @@ export default function TaggedImagesGrid(props) {
   return (
     <div className="tagged-images--container card">
       {Object.entries(tags || [])?.map?.(([tagLabel, tag]) => {
-        if (tagLabel === "sunsets") {
-          debugger;
-        }
         if (!tag || !tagLabel) return null;
         const { color } = tag;
         return (
