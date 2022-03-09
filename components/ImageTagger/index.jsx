@@ -1,6 +1,5 @@
-import { Component, useState } from "react/cjs/react.development";
+import { useState, useEffect } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
-import { useEffect } from "react/cjs/react.development";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
 import selectedImageState from "../../store/atoms/selectedImage.js";
@@ -8,6 +7,9 @@ import ImagesGrid from "../ImagesGrid/index.jsx";
 import TaggedImagesGrid from "../TaggedImagesGrid/index.jsx";
 import TagCreator from "../TagCreator/index.jsx";
 import AvailableTags from "../AvailableTags/index.jsx";
+import _ from "lodash";
+
+const MAX_NUM_PICS = 20;
 
 export default function Home(props) {
   const [tags, setTags] = useRecoilState(tagsState);
@@ -15,21 +17,50 @@ export default function Home(props) {
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  //on mounted
+  //on mounted,
   useEffect(() => {
-    const MAX_NUM_PICS = 3;
-    fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
-      async (response) => {
-        const pics = await response.json();
-        const mappedPics = pics.map((pic) => {
-          const { download_url: url, id, author } = pic;
-          return { url, id, author, tags: {} };
-        });
+    // load the images and tags stored in the local storage
 
-        setImages(mappedPics);
-      }
+    // tags
+    const tagsFromLocalstorage = JSON.parse(
+      window.localStorage.getItem("tags")
     );
+    if (!_.isEmpty(tagsFromLocalstorage)) {
+      setTags(tagsFromLocalstorage);
+    }
+
+    //images
+    const imagesFromLocalstorage = JSON.parse(
+      window.localStorage.getItem("images")
+    );
+
+    if (imagesFromLocalstorage?.length) {
+      setImages(imagesFromLocalstorage);
+    } else {
+      // fetch images
+      fetch(`https://picsum.photos/v2/list?page=2&limit=${MAX_NUM_PICS}`).then(
+        async (response) => {
+          const pics = await response.json();
+          const mappedPics = pics.map((pic) => {
+            const { download_url: url, id, author } = pic;
+            return { url, id, author, tags: {} };
+          });
+
+          setImages(mappedPics);
+        }
+      );
+    }
   }, []);
+
+  // save a copy of the 'images' and 'tags' state in the browser's local storage,
+  // so that we can load that data when the browser refreshes
+  useEffect(() => {
+    window.localStorage.setItem("images", JSON.stringify(images));
+  }, [images]);
+
+  useEffect(() => {
+    window.localStorage.setItem("tags", JSON.stringify(tags));
+  }, [tags]);
 
   return (
     <div>
