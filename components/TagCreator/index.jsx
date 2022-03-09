@@ -9,9 +9,7 @@ import ColorPicker from "../ColorPicker/index.jsx";
 
 export default function TagCreator(props) {
   const [tagColor, setTagColor] = useState("#7600bf");
-  const [images, setImages] = useRecoilState(imagesState);
   const [tags, setTags] = useRecoilState(tagsState);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [tagLabel, setTagLabel] = useState("");
   const [isTagValid, setIsTagValid] = useState(false); // because we start with "" as the initial value for tagLabel
 
