@@ -56,7 +56,10 @@ export default function TagsWithAssociatedImages(props) {
             })?.map((imageOfTag, imageIndex, imagesArr) => {
               const { url, originalImageIndex } = imageOfTag;
               return (
-                <div className="tagged-image--container">
+                <div
+                  className="tagged-image--container"
+                  key={originalImageIndex}
+                >
                   <div className="tagged-image--first-row">
                     <span className="tagged-images--image-name">
                       Image {originalImageIndex}

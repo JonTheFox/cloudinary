@@ -66,7 +66,7 @@ export default function Home(props) {
         .main-area {
           grid-area: main-area;
           position: relative;
-          height: 84vh;
+          height: 100%;
           width: calc(100vw - 254px);
         }
 

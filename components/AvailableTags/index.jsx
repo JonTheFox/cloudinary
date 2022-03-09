@@ -17,11 +17,11 @@ export default function AvailableTags(props) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   const deleteTag = useCallback(
-    (deletedTagLabel) => {
+    (tagLabelToDelete) => {
       let newTags;
       setTags((prevTags) => {
         const updatedTags = _.cloneDeep(prevTags);
-        delete updatedTags[deletedTagLabel];
+        delete updatedTags[tagLabelToDelete];
         newTags = updatedTags;
         return updatedTags;
       });
@@ -38,7 +38,7 @@ export default function AvailableTags(props) {
           const imageTags = image?.tags || [];
           const filteredTags = imageTags.filter?.((tag) => {
             // keep the tags that do not have the deleted tag's label
-            return !tag?.includes?.(deletedTagLabel);
+            return !tag?.includes?.(tagLabelToDelete);
           });
 
           updatedImages[imageIndex] = imagesClone[imageIndex];

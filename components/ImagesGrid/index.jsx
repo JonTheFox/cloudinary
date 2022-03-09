@@ -46,7 +46,9 @@ function ImagesGrid(props) {
     ({ tag, tagLabel, checked }) => {
       const selectedImageClone = _.cloneDeep(selectedImage);
       // copy the the temporary tags to the cloned item from the store
-      selectedImageClone.tags = tempImages.current[selectedImageIndex]?.tags;
+      selectedImageClone.tags = _.cloneDeep(
+        tempImages.current[selectedImageIndex]?.tags
+      );
 
       debugger;
       // add or remove the specific tag that has just been changed
