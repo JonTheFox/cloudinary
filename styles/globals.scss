@@ -22,9 +22,10 @@ body {
     Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue;
   padding: 0;
-  margin: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 a {
@@ -36,6 +37,34 @@ a {
   box-sizing: border-box;
 }
 
+//
+//  scrollbars
+//
+::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+  opacity: 1;
+  background: $theme-green--light;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $theme-green--light;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $theme-orange--light;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $theme-yellow--light;
+}
+
+//
+// other globals
+//
 .card {
   /* box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); */
   padding: 0.25rem;
@@ -56,14 +85,6 @@ a {
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
 }
 
 .MuiList-root

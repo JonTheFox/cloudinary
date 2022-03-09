@@ -1,9 +1,4 @@
-import {
-  Component,
-  useState,
-  useEffect,
-  useCallback,
-} from "react/cjs/react.development";
+import { useState, useCallback } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import tagsState from "../../store/atoms/tags.js";
 import imagesState from "../../store/atoms/images.js";
@@ -11,7 +6,7 @@ import Button from "@mui/material/Button";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import _ from "lodash";
 
-export default function TagsWithAssociatedImages(props) {
+export default function TaggedImagesGrid(props) {
   const [tags, setTags] = useRecoilState(tagsState);
   const [images, setImages] = useRecoilState(imagesState);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -62,13 +57,16 @@ export default function TagsWithAssociatedImages(props) {
   return (
     <div className="tagged-images--container card">
       {Object.entries(tags || [])?.map?.(([tagLabel, tag]) => {
+        if (tagLabel === "sunsets") {
+          debugger;
+        }
         if (!tag || !tagLabel) return null;
         const { color } = tag;
         return (
           <div
             className="tag--container"
             style={{ backgroundColor: color || "" }}
-            key={tag.key}
+            key={tagLabel}
           >
             <span className="tab-label">{tagLabel || ""}</span>
             {getImagesByTag({
