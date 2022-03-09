@@ -218,3 +218,8 @@ html {
   color: $theme-purple--dark;
   border-color: $theme-purple--dark;
 }
+
+.tags-list {
+  overflow: hidden;
+  border-radius: 4px;
+}
