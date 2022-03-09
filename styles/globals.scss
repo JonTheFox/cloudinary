@@ -167,15 +167,24 @@ html {
     border-color: $theme-brown--light;
     background-color: $theme-brown--light;
   }
+}
 
+.MuiButton-root.MuiButtonBase-root {
   &#save-tag--btn {
     position: absolute;
+    color: $theme-purple--light;
+    border-color: $theme-purple--light;
     bottom: 0px;
     width: 100%;
     margin: 0;
     left: 0;
     padding-right: 0;
     padding-left: 0;
+
+    &.Mui-disabled {
+      color: $theme-brown--light;
+      border-color: $theme-brown--light;
+    }
   }
 }
 

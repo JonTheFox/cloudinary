@@ -167,6 +167,7 @@ function ImagesGrid(props) {
           height: auto;
           position: relative;
           max-width: calc(33.3333% - 0.5rem);
+
           padding: 0.25rem;
           transition: all 0.1s;
           margin-right: 0.25rem;
@@ -176,24 +177,32 @@ function ImagesGrid(props) {
 
         @media screen and (min-width: 1000px) {
           .image {
+            width: calc(25% - 0.5rem);
+            min-width: calc(25% - 0.5rem);
             max-width: calc(25% - 0.5rem);
           }
         }
 
         @media screen and (min-width: 1600px) {
           .image {
+            width: calc(20% - 0.5rem);
+            min-width: calc(20% - 0.5rem);
             max-width: calc(20% - 0.5rem);
           }
         }
 
         @media screen and (max-width: 800px) {
           .image {
+            width: calc(50% - 0.5rem);
+            min-width: calc(50% - 0.5rem);
             max-width: calc(50% - 0.5rem);
           }
         }
 
         @media screen and (max-width: 600px) {
           .image {
+            width: calc(100% - 0.5rem);
+            min-width: calc(100% - 0.5rem);
             max-width: calc(100% - 0.5rem);
           }
         }

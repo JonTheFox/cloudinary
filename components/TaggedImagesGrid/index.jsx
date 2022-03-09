@@ -37,6 +37,28 @@ export default function TagsWithAssociatedImages(props) {
     return imagesOfTag;
   }, []);
 
+  const removeTagFromImage = useCallback(
+    ({ image: imageOfTag, originalImageIndex, tagLabel, tag }) => {
+      setImages((prevImages) => {
+        const imagesClone = _.cloneDeep(prevImages);
+
+        // if the tag doesn't exist in the image's tags, we don't mutate the state
+        if (!imagesClone?.[originalImageIndex]?.tag?.[tagLabel]) imagesClone;
+
+        // if the tag does exist as one of the tags linked to the image,
+        // remove the tag from the image
+        _.set(
+          imagesClone,
+          `[${originalImageIndex}].tags[${tagLabel}]`,
+          undefined
+        );
+        // TODO: BUG: the image doesn't appear in the untagged images again
+        return imagesClone;
+      });
+    },
+    []
+  );
+
   return (
     <div className="tagged-images--container card">
       {Object.entries(tags || [])?.map?.(([tagLabel, tag]) => {
@@ -64,7 +86,17 @@ export default function TagsWithAssociatedImages(props) {
                     <span className="tagged-images--image-name">
                       Image {originalImageIndex}
                     </span>
-                    <Button className="delete-btn">
+                    <Button
+                      className="delete-btn"
+                      onClick={() =>
+                        removeTagFromImage({
+                          image: imageOfTag,
+                          originalImageIndex,
+                          tagLabel,
+                          tag,
+                        })
+                      }
+                    >
                       <DeleteOutlinedIcon />
                     </Button>
                   </div>

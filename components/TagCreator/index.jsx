@@ -110,7 +110,7 @@ export default function TagCreator(props) {
 
       <Button
         id="save-tag--btn"
-        variant="contained"
+        variant="outlined"
         onClick={saveTag}
         disabled={!isTagValid}
       >
