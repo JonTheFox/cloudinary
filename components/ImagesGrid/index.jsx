@@ -103,11 +103,7 @@ function ImagesGrid(props) {
             />
           );
         })}
-        <Button
-          variant="outlined"
-          className="apply-tags-btn"
-          onClick={updateImageTags}
-        >
+        <Button className="apply-tags-btn" onClick={updateImageTags}>
           Apply
         </Button>
       </Menu>

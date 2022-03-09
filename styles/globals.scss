@@ -211,6 +211,15 @@ html {
   color: black;
 }
 
+.tag-container {
+  .delete-btn {
+    opacity: 0;
+  }
+  &:hover .delete-btn {
+    opacity: 1;
+  }
+}
+
 .apply-tags-btn {
   width: 100%;
   color: $theme-purple--dark;

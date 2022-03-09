@@ -72,11 +72,8 @@ export default function AvailableTags(props) {
               key={tagLabel}
             >
               <span className="tab-label">{tagLabel || ""}</span>
-              <Button>
-                <DeleteOutlinedIcon
-                  className="delete-btn"
-                  onClick={() => deleteTag(tagLabel)}
-                />
+              <Button className="delete-btn">
+                <DeleteOutlinedIcon onClick={() => deleteTag(tagLabel)} />
               </Button>
             </div>
           );
@@ -90,11 +87,22 @@ export default function AvailableTags(props) {
           max-height: 532px;
           overflow: auto;
         }
+
         .tag-container {
           display: flex;
           height: 40px;
-
+          opacity: 0.85;
           margin: 4px 0;
+        }
+        .tag-container:hover {
+          opacity: 1;
+        }
+
+        .delete-btn {
+          opacity: 0;
+        }
+        .tag-container:hover .delete-btn {
+          opacity: 1;
         }
 
         .tab-label {
