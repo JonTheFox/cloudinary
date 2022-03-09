@@ -35,18 +35,6 @@ export default function TagCreator(props) {
       setTagLabel("");
 
       return updatedTags;
-
-      // const updatedSelectedImage = _.cloneDeep(selectedImage);
-      // // lodash doesn't copy the nested 'tags' array, so we copy it ourselves
-      // const updatedSelectedImageTags =
-      //   { ...prevTags[selectedImageIndex].tags } || {};
-
-      // updatedImages[selectedImageIndex].tags = updatedSelectedImageTags;
-      // updatedSelectedImageTags[tagLabel] = checked ? tag : undefined;
-      // updatedSelectedImage.tags = updatedSelectedImageTags;
-      // updatedImages[selectedImageIndex] = updatedSelectedImage;
-
-      // return updatedImages;
     });
   }, [isTagValid, setTags, tagLabel, tagColor]);
 

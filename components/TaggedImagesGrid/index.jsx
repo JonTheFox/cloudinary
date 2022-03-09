@@ -36,18 +36,14 @@ export default function TaggedImagesGrid(props) {
     ({ image: imageOfTag, originalImageIndex, tagLabel, tag }) => {
       setImages((prevImages) => {
         const imagesClone = _.cloneDeep(prevImages);
-
-        // if the tag doesn't exist in the image's tags, we don't mutate the state
-        if (!imagesClone?.[originalImageIndex]?.tag?.[tagLabel]) imagesClone;
-
-        // if the tag does exist as one of the tags linked to the image,
-        // remove the tag from the image
         _.set(
           imagesClone,
           `[${originalImageIndex}].tags[${tagLabel}]`,
           undefined
         );
-        // TODO: BUG: the image doesn't appear in the untagged images again
+        // now that we have the path to the property, we can safely delete it entirely
+        // so that the property doesn't get picked up by _.isEmpty() as an actualy property with a value
+        delete imagesClone[originalImageIndex].tags[tagLabel];
         return imagesClone;
       });
     },

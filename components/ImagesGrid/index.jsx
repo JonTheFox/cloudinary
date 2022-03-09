@@ -121,10 +121,14 @@ function ImagesGrid(props) {
   return (
     <section className="images-grid raised--high card shadow--curved glass">
       {Object.values(images)?.map?.((image, imageIndex, _images) => {
+        // if (imageIndex === 0) {
+        //   debugger;
+        // }
         if (!image) {
           return null;
         }
         const { url, id, tags } = image;
+
         if (!_.isEmpty(tags || {})) return null;
         if (!id) return null;
         const isSelectedImageIndex = selectedImageIndex === imageIndex;
