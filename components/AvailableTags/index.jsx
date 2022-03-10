@@ -95,7 +95,7 @@ export default function AvailableTags(props) {
             return;
           });
         });
-        debugger;
+
         return updatedImages;
       });
     },
